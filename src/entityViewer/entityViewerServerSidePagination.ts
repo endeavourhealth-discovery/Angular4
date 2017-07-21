@@ -37,15 +37,13 @@ import {Router} from "@angular/router";
         </div>
         <br>
         <div class="row">
-            <div *ngFor="let item of items">
-                <div class="col-md-3">
-                    <div [ngClass]="displayClass">
-                        <a (click)="viewItemDetails(item)">
-                            <span><b>{{item[primary]}}</b><br><p *ngIf="secondary">{{item[secondary]}}<p></span>
-                        </a>
-                        <div *ngIf="allowDelete" class="input-group-btn">
-                            <button class="btn btn-danger btn-xs child-to-show pull-right" type="button" (click)="delete(item)"><i class="fa fa-remove text-danger"></i></button>
-                        </div>
+            <div *ngFor="let item of items" class="col-md-3">
+                <div [ngClass]="displayClass">
+                    <a (click)="viewItemDetails(item)">
+                        <span><b>{{item[primary]}}</b><br><p *ngIf="secondary">{{item[secondary]}}<p></span>
+                    </a>
+                    <div *ngIf="allowDelete" class="input-group-btn">
+                        <button class="btn btn-danger btn-xs child-to-show pull-right" type="button" (click)="delete(item)"><i class="fa fa-remove text-danger"></i></button>
                     </div>
                 </div>
             </div>
