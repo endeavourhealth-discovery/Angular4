@@ -1,6 +1,6 @@
 {
   "name": "eds-angular4",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "devDependencies": {
@@ -19,6 +19,7 @@
     "@angular/platform-server": "^4.3.1",
     "@angular/router": "^4.0.0",
     "@ng-bootstrap/ng-bootstrap": "1.0.0-alpha.26",
+    "ng2-toastr": "^4.1.2",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },
