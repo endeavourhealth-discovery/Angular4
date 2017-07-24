@@ -133,27 +133,27 @@ export class EntityViewer {
         console.log(vm.model);
         switch (vm.model.toLowerCase()) {
             case "organisation": {
-                this.router.navigate(['app.organisationManagerEditor', {itemUuid: item.uuid, itemAction: 'edit'}]);
+                this.router.navigate(['/organisation', item.uuid, 'edit']);
                 break;
             }
             case "region" : {
-                this.router.navigate(['app.regionEditor', {itemUuid: item.uuid, itemAction: 'edit'}]);
+                this.router.navigate(['/region', item.uuid, 'edit']);
                 break;
             }
             case "dataflow" : {
-                this.router.navigate(['app.dataFlowEditor', {itemUuid: item.uuid, itemAction: 'edit'}]);
+                this.router.navigate(['/dataFlow', item.uuid, 'edit']);
                 break;
             }
             case "dsa" : {
-                this.router.navigate(['app.dsaEditor', {itemUuid: item.uuid, itemAction: 'edit'}]);
+                this.router.navigate(['/dsa', item.uuid, 'edit']);
                 break;
             }
             case "dpa" : {
-                this.router.navigate(['app.dpaEditor', {itemUuid: item.uuid, itemAction: 'edit'}]);
+                this.router.navigate(['/dpa', item.uuid, 'edit']);
                 break;
             }
             case "datasharingsummary" : {
-                this.router.navigate(['app.dataSharingSummaryEditor', {itemUuid: item.uuid, itemAction: 'edit'}]);
+                this.router.navigate(['/dataSharingSummary', item.uuid, 'edit']);
                 break;
             }
         }
