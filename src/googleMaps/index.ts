@@ -1,0 +1,1 @@
+export { GoogleMapsModule } from './googleMaps.module';
