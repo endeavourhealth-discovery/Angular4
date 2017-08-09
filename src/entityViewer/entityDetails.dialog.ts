@@ -15,21 +15,19 @@ import {NgbModal, NgbActiveModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap"
                         <h2>{{item[primaryProperty]}}</h2>
                     </div>
                 </div>
-                <div class="row">
-                    <div *ngFor="let detail of detailsToShow">
-                        <div *ngIf="!detail.document" class="col-md-12">
-                            <b>{{detail.label}} : </b>{{item[detail.property]}}
-                        </div>
-                        <div class="col-md-12">
-                            <pdf-viewer *ngIf="detail.document" 
-                                        [src]="item[detail.property]"
-                                        [page]="page"
-                                        [original-size]="false"
-                                        [render-text]="true"
-                                        [show-all]="true"
-                                        style="display: block;"
-                            ></pdf-viewer>
-                        </div>
+                <div *ngFor="let detail of detailsToShow" class="row">
+                    <div *ngIf="!detail.document" class="form-group col-md-12">
+                        <b>{{detail.label}} : </b>{{item[detail.property]}}
+                    </div>
+                    <div *ngIf="detail.document" class="form-group col-md-12">
+                        <h4>Document</h4>
+                        <pdf-viewer [src]="item[detail.property]"
+                                    [page]="page"
+                                    [original-size]="false"
+                                    [render-text]="true"
+                                    [show-all]="true"
+                                    style="display: block;"
+                        ></pdf-viewer>
                     </div>
                 </div>
             </form>
