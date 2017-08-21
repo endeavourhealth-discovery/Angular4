@@ -10,6 +10,7 @@ export class User {
 	surname:string;
 	username:string;	// email
 	isSuperUser:boolean;
+    clientAccess:string[];
 	permissions:string[];
 	organisation:string;
 	organisationGroups: OrganisationGroup[];

@@ -32,6 +32,10 @@ export class SecurityService {
       //user.title = this.getAuthz().idTokenParsed.title;              // TODO: custom attribute??
       user.uuid = this.getAuthz().idTokenParsed.sub;
       user.permissions = this.getAuthz().realmAccess.roles;
+      user.clientAccess = [];
+      var clientAccess : Map <String, String[]> = this.getAuthz().resourceAccess;
+      for (let clientApp in clientAccess){
+        user.clientAccess.push(clientApp+","+clientAccess [clientApp].roles.join(","));}
 
       user.organisationGroups = [];
 
