@@ -1,21 +1,41 @@
 import {Injectable} from '@angular/core';
 
 declare var Keycloak: any;
+declare var jQuery, $:any;
 
 @Injectable()
 export class KeycloakService {
   static auth: any = {};
 
   static init(): Promise<any> {
+
+		return KeycloakService.getConfig();
+	}
+
+	private static getConfig() : Promise<any> {
+		var defer = jQuery.Deferred();
+		jQuery.getJSON("/public/wellknown/authconfig", (data: any, textStatus: string, jqXHR: any) => {
+			defer.resolve(data);
+		});
+
+		return new Promise((resolve, reject) => {
+			jQuery.when(defer.promise()).then(
+				function (data) {
+					console.log(data);
+					KeycloakService.initKeycloak(resolve, reject, data);
+				});
+		});
+	}
+
+	private static initKeycloak(resolve, reject, config) {
     const keycloakAuth: any = Keycloak({
-      realm: "endeavour",
-      url: "https://devauth.endeavourhealth.net/auth",
-      clientId: "eds-patient-explorer",
+      realm: config.realm,
+      url: config.authServerUrl,
+      clientId: config.authClientId,
     });
 
     KeycloakService.auth.loggedIn = false;
 
-    return new Promise((resolve, reject) => {
       keycloakAuth.init({ onLoad: 'login-required' })
         .success(() => {
           KeycloakService.auth.loggedIn = true;
@@ -28,7 +48,6 @@ export class KeycloakService {
         .error(() => {
           reject();
         });
-    });
   }
 
   public getAuthz() {

@@ -16,6 +16,8 @@
 		"strictMetadataEmit": true
 	},
 	"exclude": [
+		".idea",
+		"aot",
 		"node_modules",
 		"typings",
 		"dist"
