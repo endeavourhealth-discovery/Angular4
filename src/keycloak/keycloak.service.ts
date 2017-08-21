@@ -21,7 +21,6 @@ export class KeycloakService {
 		return new Promise((resolve, reject) => {
 			jQuery.when(defer.promise()).then(
 				function (data) {
-					console.log(data);
 					KeycloakService.initKeycloak(resolve, reject, data);
 				});
 		});
