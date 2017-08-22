@@ -1,4 +1,5 @@
 import {OrganisationGroup} from "./OrganisationGroup";
+import {Access} from "./Access";
 export class User {
 
 			constructor() {
@@ -10,7 +11,7 @@ export class User {
 	surname:string;
 	username:string;	// email
 	isSuperUser:boolean;
-    clientAccess:string[];
+	clientAccess:Map <String, Access>;
 	permissions:string[];
 	organisation:string;
 	organisationGroups: OrganisationGroup[];
