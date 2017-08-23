@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {User} from "./models/User";
 import {KeycloakService} from "../keycloak/keycloak.service";
 import {OrganisationGroup} from "./models/OrganisationGroup";
+import {Access} from "./models/Access";
 
 @Injectable()
 export class SecurityService {
@@ -24,7 +25,20 @@ export class SecurityService {
     return KeycloakService.auth.authz;
   }
 
-  private parseUser() : User {
+	hasPermission(client, role : string) : boolean {
+		if (role == null || role == '')
+			return true;
+
+		let clientAccess : Access = this.getCurrentUser().clientAccess[client];
+
+		if (clientAccess && clientAccess.roles)
+			return clientAccess.roles.indexOf(role) > -1;
+
+		return false;
+	}
+
+
+	private parseUser() : User {
     if(this.getAuthz().idTokenParsed && this.getAuthz().realmAccess) {
       var user = new User;
       user.forename = this.getAuthz().idTokenParsed.given_name;
