@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Router, Routes} from "@angular/router";
+import {MenuAuth} from "./menuAuth.service";
 
 @Component({
   selector: 'app-root',
@@ -11,9 +13,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router : Router, private menuAuth : MenuAuth) { }
 
   ngOnInit() {
+  	let routes : Routes = this.router.config;
+  	routes = this.menuAuth.secureRoutes(routes);
+  	this.router.resetConfig(routes);
   }
 
 }

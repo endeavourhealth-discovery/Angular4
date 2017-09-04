@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MenuService} from "./menu.service";
+import {AbstractMenuProvider} from "./menuProvider.service";
 import {MenuOption} from "./models/MenuOption";
 import {SecurityService} from "../security/security.service";
 
@@ -168,15 +168,15 @@ import {SecurityService} from "../security/security.service";
 export class SidebarComponent implements OnInit {
   menuOptions:MenuOption[];
 
-  constructor(private menuService:MenuService, private securityService:SecurityService) {
-    this.menuOptions = menuService.getMenuOptions();
+  constructor(private menuProvider:AbstractMenuProvider, private securityService:SecurityService) {
+    this.menuOptions = menuProvider.getMenuOptions();
   }
 
   ngOnInit() {
   }
 
 	hasPermission(role : string) : boolean {
-		return this.securityService.hasPermission(this.menuService.getClientId(), role);
+		return this.securityService.hasPermission(this.menuProvider.getClientId(), role);
 	}
 
 	logout() {

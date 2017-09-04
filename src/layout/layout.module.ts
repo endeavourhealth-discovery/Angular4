@@ -7,6 +7,9 @@ import {LayoutComponent} from "./layout.component";
 import {RouterModule} from "@angular/router";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {SecurityModule} from "../security/security.module";
+import {MenuAuth} from "./menuAuth.service";
+import {StopComponent} from "./stop.component";
+
 
 @NgModule({
   imports : [
@@ -20,6 +23,13 @@ import {SecurityModule} from "../security/security.module";
     LayoutComponent,
     SidebarComponent,
     TopnavComponent,
-  ]
+		StopComponent,
+  ],
+	providers : [
+		MenuAuth
+	],
+	entryComponents : [
+		StopComponent
+	]
 })
 export class LayoutModule {}

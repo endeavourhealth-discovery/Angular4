@@ -1,2 +1,2 @@
-export { MenuService } from './menu.service';
+export { AbstractMenuProvider } from './menuProvider.service';
 export { LayoutModule } from './layout.module';

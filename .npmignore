@@ -9,3 +9,5 @@ index.ts
 typings
 typings.json
 target
+.idea
+aot

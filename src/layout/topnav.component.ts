@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MenuService} from "./menu.service";
+import {AbstractMenuProvider} from "./menuProvider.service";
 import {SecurityService} from "../security/security.service";
 import {User} from "../security/models/User";
 
@@ -55,7 +55,7 @@ import {User} from "../security/models/User";
 export class TopnavComponent implements OnInit {
   currentUser:User;
 
-  constructor(private securityService:SecurityService, private menuService : MenuService) {
+  constructor(private securityService:SecurityService, private menuProvider : AbstractMenuProvider) {
     let vm = this;
 
     vm.currentUser = this.securityService.getCurrentUser();
@@ -65,7 +65,7 @@ export class TopnavComponent implements OnInit {
   }
 
   getApplicationTitle() : string {
-    return this.menuService.getApplicationTitle();
+    return this.menuProvider.getApplicationTitle();
   }
 
   navigateUserAccount() {
