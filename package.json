@@ -20,11 +20,12 @@
     "@angular/router": "^4.0.0",
     "@ng-bootstrap/ng-bootstrap": "1.0.0-alpha.26",
     "jquery": "^1.7.4",
-    "ng2-pdf-viewer": "^1.1.0",
+    "ng2-pdf-viewer": "1.2.2",
     "ng2-toastr": "^4.1.2",
     "ngx-pagination": "^3.0.1",
     "rxjs": "^5.1.0",
-    "zone.js": "^0.8.4"
+		"typescript": "~2.3.3",
+		"zone.js": "^0.8.4"
   },
   "scripts": {
     "build": "./node_modules/.bin/ngc && npm pack"
