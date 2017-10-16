@@ -5,8 +5,8 @@ import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'
 @Component({
 	selector: 'ngbd-modal-content',
 	template: `<div class="modal-header">
-		<button type="button" class="close" (click)="cancel()" aria-hidden="true">&times;</button>
 		<h4 class="modal-title">{{ title }}</h4>
+		<button type="button" class="close" (click)="cancel()" aria-hidden="true">&times;</button>
 	</div>
 	<div class="modal-body">
 		<form endUserRole="form" class="container-fluid">

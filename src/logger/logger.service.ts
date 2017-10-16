@@ -1,4 +1,4 @@
-import {Injectable, ViewContainerRef} from "@angular/core";
+import {Injectable} from "@angular/core";
 import { ToastsManager, ToastOptions } from 'ng2-toastr/ng2-toastr';
 
 @Injectable()
@@ -14,12 +14,12 @@ export class LoggerService {
 
 	error(message:string, data?:{}, title?:string) {
 		this.toastr.error(this.appendResponseMessage(message, data), title, {enableHTML: true});
-        console.log('Error: ' + message, '\nSummary:', title, '\nDetails:', data);
+        console.error('Error: ' + message, '\nSummary:', title, '\nDetails:', data);
 	}
 
 	info(message:string, data?:{}, title?:string) {
 		this.toastr.info(this.appendResponseMessage(message, data), title, {enableHTML: true});
-        console.log('Info: ' + message, '\nSummary:', title, '\nDetails:', data);
+        console.info('Info: ' + message, '\nSummary:', title, '\nDetails:', data);
 	}
 
 	success(message:string, data?:{}, title?:string) {
@@ -29,7 +29,7 @@ export class LoggerService {
 
 	warning(message:string, data?:{}, title?:string) {
 		this.toastr.warning(this.appendResponseMessage(message, data), title, {enableHTML: true});
-        console.log('Warning: ' + message, '\nSummary:', title, '\nDetails:', data);
+        console.error('Warning: ' + message, '\nSummary:', title, '\nDetails:', data);
 	}
 
 	/**

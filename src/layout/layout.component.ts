@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import {Router, Routes} from "@angular/router";
 import {MenuAuth} from "./menuAuth.service";
+import {ToastsManager} from 'ng2-toastr';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,12 @@ import {MenuAuth} from "./menuAuth.service";
 })
 export class LayoutComponent implements OnInit {
 
-  constructor(private router : Router, private menuAuth : MenuAuth) { }
+  constructor(private toastr: ToastsManager,
+							private router : Router,
+							private menuAuth : MenuAuth,
+							vRef: ViewContainerRef) {
+		this.toastr.setRootViewContainerRef(vRef);
+	}
 
   ngOnInit() {
   	let routes : Routes = this.router.config;
