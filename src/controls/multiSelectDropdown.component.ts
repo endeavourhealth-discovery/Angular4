@@ -1,5 +1,5 @@
-import {Component, forwardRef, Input} from "@angular/core";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {Component, forwardRef, Input} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
 	selector : 'multiSelectDropdown',
@@ -9,7 +9,21 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 		<div class="dropdown-item" (click)="selectAll()"><i class="fa fa-check"></i> Select all</div>
 		<div class="dropdown-item" (click)="selectNone()"><i class="fa fa-times"></i> Unselect all</div>
 		<hr>
-		<div *ngFor="let item of data" class="dropdown-item" (click)="toggle(item)"><i [ngClass]="getIcon(item)"></i> {{item.name}}</div>
+		<div *ngFor="let item of data" class="dropdown-item" (click)="toggle(item)">
+			<ng-template #tooltipTemplate>
+				<div *ngIf="item.tooltip">{{item.tooltip}}</div>
+				<div *ngIf="item.tooltipKvp" style="text-align: left !important;">
+					<table>
+						<tr *ngFor="let key of getKeys(item.tooltipKvp)">
+							<td>{{key}}</td>
+							<td>&nbsp;:&nbsp;</td>
+							<td>{{item.tooltipKvp[key]}}</td>
+						</tr>
+					</table>
+				</div>				
+			</ng-template>
+			<span [ngbTooltip]="tooltipTemplate"><i [ngClass]="getIcon(item)"></i> {{item.name}}</span>
+		</div>
 	</div>
 </div>`,
 	styles: [`.dropdown-item {
@@ -55,20 +69,20 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
 
 	getCaption() {
 		if (!this.selectedItems || this.selectedItems.length == 0)
-			return "Select";
+			return 'Select';
 		else if (this.selectedItems.length == this.data.length)
-			return "All";
+			return 'All';
 		else if (this.selectedItems.length == 1)
-			return "1 Item";
+			return '1 Item';
 		else
-			return this.selectedItems.length + " Items";
+			return this.selectedItems.length + ' Items';
 	}
 
 	getIcon(item : any) {
 		if (this.selectedItems.indexOf(item.id) == -1)
-			return "fa fa-blank";
+			return 'fa fa-blank';
 
-		return "fa fa-check";
+		return 'fa fa-check';
 	}
 
 	selectAll() {
@@ -92,5 +106,9 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
 			this.selectedItems.splice(index, 1);
 
 		this.changed.forEach(f => f(this.selectedItems));
+	}
+
+	getKeys(object: any) {
+		return Object.keys(object);
 	}
 }
