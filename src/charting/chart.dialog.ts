@@ -18,7 +18,7 @@ import {Chart} from "./models/Chart";
             <form role="form">
                 <div class="row">
                     <div class="col-md-12">
-                        <chart [data]="chart"></chart>
+                        <chart [data]="chartData"></chart>
                     </div>
                 </div>
             </form>
