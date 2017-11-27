@@ -6,4 +6,3 @@ export * from './entityViewer/index';
 export * from './dialogs/index';
 export * from './googleMaps/index';
 export * from './controls/index';
-export * from './charting/index';
