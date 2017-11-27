@@ -5,7 +5,7 @@ Clicking on an item will open a modal dialog window with custom definable proper
  ##### Usage
  Import using 
  ```angular2html
-import {EntityViewComponentsModule} from "eds-common-js";
+import {EntityViewComponentsModule} from 'eds-angular4/dist/entityViewer';
 ```
  
  and add EntityViewComponentsModule to your imports section in the module you want to use it.

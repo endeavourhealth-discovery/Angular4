@@ -4,7 +4,7 @@ Component to display a google map containing clustered markers
 #### Usage
 Import the Google Maps Module into the module you want to use it in.
 ```typescript
-import { GoogleMapsModule } from 'eds-angular4';
+import { GoogleMapsModule } from 'eds-angular4/dist/googleMaps';
 ```
 
 and add it to your imports
