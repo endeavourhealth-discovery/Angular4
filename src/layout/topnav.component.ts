@@ -70,7 +70,7 @@ export class TopnavComponent implements OnInit {
 
   navigateUserAccount() {
     var url = window.location.protocol + "//" + window.location.host;
-    url = url + "/eds-user-manager/#/app/users/userManagerUserView";
+    url = url + "/user-manager/#/app/users/userManagerUserView";
     window.location.href = url;
   }
 
