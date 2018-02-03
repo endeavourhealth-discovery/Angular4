@@ -33,10 +33,10 @@ import {LoggerService} from "../logger/logger.service";
 			<!-- Matches -->
 			<div class="row" #container style="overflow: hidden">
 				<div class="col-md-12">
-					<label class="control-label">Location: </label><span *ngFor="let item of breadcrumbs"><a href="javascript:;" (click)="navigateConcept(item, true, 5)">{{item.term}}</a> / </span>
+					<label class="control-label">Location:&nbsp;</label><span *ngFor="let item of breadcrumbs"><a href="javascript:;" (click)="navigateConcept(item, true, 5)">{{item.term}}</a> / </span>
 				</div>
 				<div class="form-group col-md-4">
-					<label class="control-label">Parents</label> <small class="text-muted">(Dbl click to navigate up)</small>
+					<label class="control-label">Parents</label> <small class="text-muted">(Double-click to navigate up)</small>
 					<div [ngStyle]="animStyle" class="scroll-box-150 form-control">
 						<div *ngFor="let parent of parents"
 								 (dblclick)="navigateConcept(parent, true, 1)"
@@ -64,7 +64,7 @@ import {LoggerService} from "../logger/logger.service";
 					</div>
 				</div>
 				<div class="form-group col-md-4">
-					<label class="control-label">Children</label> <small class="text-muted">(Dbl click to navigate down)</small>
+					<label class="control-label">Children</label> <small class="text-muted">(Double-click to navigate down)</small>
 					<div [ngStyle]="animStyle" class="scroll-box-150 form-control">
 						<div *ngFor="let child of children"
 								 (dblclick)="navigateConcept(child, true, -1)"
