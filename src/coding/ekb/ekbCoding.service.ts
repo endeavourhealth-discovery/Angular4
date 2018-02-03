@@ -16,22 +16,22 @@ export class EkbCodingService  implements CodingService {
 		params.append('maxResultsSize', '20');
 		params.append('start', '0');
 
-		return this.http.get('/api/ekb/search/sct', {search: params})
+		return this.http.get('api/ekb/search/sct', {search: params})
 			.map((result) => result.json());
 	}
 
 	getCodeChildren(id : string):Observable<CodeSetValue[]> {
-		return this.http.get('/api/ekb/hierarchy/' + id + '/childHierarchy')
+		return this.http.get('api/ekb/hierarchy/' + id + '/childHierarchy')
 			.map((result) => result.json());
 	}
 
 	getCodeParents(id : string):Observable<CodeSetValue[]> {
-		return this.http.get('/api/ekb/hierarchy/' + id + '/parentHierarchy')
+		return this.http.get('api/ekb/hierarchy/' + id + '/parentHierarchy')
 			.map((result) => result.json());
 	}
 
 	getPreferredTerm(id : string):Observable<Concept> {
-		return this.http.get('/api/ekb/concepts/' + id)
+		return this.http.get('api/ekb/concepts/' + id)
 			.map((result) => result.json());
 	}
 }
