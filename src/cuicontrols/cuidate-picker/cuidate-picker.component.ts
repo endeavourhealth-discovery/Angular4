@@ -5,8 +5,19 @@ import {NgbDateParserFormatter, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap'
 
 @Component({
   selector: 'cui-date-picker',
-  templateUrl: './cuidate-picker.component.html',
-  styleUrls: ['./cuidate-picker.component.css'],
+  template: `<div class="input-group">
+		<input class="form-control"
+					 placeholder="dd-mmm-yyyy"
+					 ngbDatepicker #d="ngbDatepicker"
+					 [ngModel]="value"
+					 (ngModelChange)="setValue($event)"
+					 [minDate]="minDate"
+					 [maxDate]="maxDate">
+		<div class="input-group-addon" (click)="d.toggle()">
+			<i class="fa fa-calendar"></i>
+		</div>
+	</div>
+	`,
   providers: [
     {provide: NgbDateParserFormatter, useClass: NgbCalendarHelper},
     {
