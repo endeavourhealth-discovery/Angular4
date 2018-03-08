@@ -1,4 +1,4 @@
 export class Period {
-    start: string;
-    end: string;
+    start: Date;
+    end: Date;
 }
