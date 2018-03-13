@@ -153,6 +153,14 @@ export class EntityViewer {
                 this.router.navigate(['/dataSharingSummary', item.uuid, 'edit']);
                 break;
             }
+            case "dataset" : {
+                this.router.navigate(['/dataSet', item.uuid, 'edit']);
+                break;
+            }
+            case "cohort" : {
+                this.router.navigate(['/cohort', item.uuid, 'edit']);
+                break;
+            }
         }
     }
 
