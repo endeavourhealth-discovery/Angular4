@@ -29,7 +29,7 @@ import {Router} from "@angular/router";
             <div class="col-md-3">
                 <div class="input-group">
                     <span class="input-group-addon" id="pageSize">Items Per Page</span>
-                    <select #selectedPageSize class="form-control" [(ngModel)]="pageSize" name="pageSize" (change)="pageSizeChange(selectedPageSize.value)">
+                    <select #selectedPageSize class="form-control" [(ngModel)]="pageSize" name="pageSize" (change)="pageSizeChange()">
                         <option *ngFor="let ps of pageSizeList" [ngValue]="ps">{{ps}}</option>
                     </select>
                 </div>
@@ -114,14 +114,14 @@ export class EntityViewerServerSidePagination {
         var i : number;
         vm.pageSizeList = [];
         if (vm.totalItems <= vm.pageSize) {
-            vm.pageSizeList.push('All');
+            vm.pageSizeList.push(vm.totalItems);
         }
         else {
             for (i = 4; i <= vm.maxPageSize; i = i + 4) {
                 if (vm.totalItems > i)
                     vm.pageSizeList.push(i);
                 if ((vm.totalItems - i) < 4 ) {
-                    vm.pageSizeList.push('All');
+                    vm.pageSizeList.push(vm.totalItems);
                 }
             }
         }
@@ -184,17 +184,12 @@ export class EntityViewerServerSidePagination {
     }
 
     orderChange(): void {
+        console.log(this.order);
         this.onOrderChange.next(this.order);
     }
 
-    pageSizeChange(value){
-        if (value == 'All')
-            this.pageSize = this.totalItems;
-        else {
-            this.pageSize = value;
-        }
-
-        this.onPageSizeChange.next(value);
+    pageSizeChange(){
+        this.onPageSizeChange.next(this.pageSize);
 
     }
 
