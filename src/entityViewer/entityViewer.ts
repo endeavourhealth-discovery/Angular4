@@ -6,12 +6,7 @@ import {Router} from "@angular/router";
 @Component({
     selector : 'entity-viewer',
     template : `
-        <div *ngIf="items?.length == 0">
-            <div class="col-md-12">
-                <p>There are no associated {{typeDescription|lowercase}}s</p>
-            </div>
-        </div>
-        <div class="row" *ngIf="items?.length > 0">
+        <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-addon" id="searchOrg">Search</span>
@@ -36,13 +31,18 @@ import {Router} from "@angular/router";
             </div>
         </div>
         <br>
-        <div class="row">
+        <div class="row" *ngIf="items?.length == 0">
+            <div class="col-md-12">
+                <p>There are no associated {{typeDescription|lowercase}}s</p>
+            </div>
+        </div>
+        <div *ngIf="items?.length > 0" class="row">
             <div *ngFor="let item of items | entityFilterPipe:filterText: primary : secondary | orderBy : orderField: reverseOrder | paginate: {id: typeDescription, itemsPerPage: pageSize, currentPage: p } " class="col-md-3">
                 <div [ngClass]="displayClass">
                     <a (click)="viewItemDetails(item)">
                     <span><b>{{item[primary]}}</b><br><p *ngIf="secondary">{{item[secondary]}}<p></span>
                     </a>
-                    <button *ngIf="allowDelete"  class="btn btn-danger btn-sm child-to-show pull-right" type="button" (click)="delete(item)"><i class="fa fa-remove text-danger"></i></button>
+                    <button *ngIf="allowDelete"  class="btn btn-sm child-to-show pull-right" type="button" (click)="delete(item)"><i class="fa fa-remove"></i></button>
                 </div>
             </div>
         </div>
