@@ -23,7 +23,7 @@ import {Router} from "@angular/router";
             </div>
             <div class="col-md-3">
                 <div class="input-group">
-                    <span class="input-group-addon" id="pageSize">Items Per Page</span>
+                    <span class="input-group-addon" id="pageSize">Items per page</span>
                     <select #selectedPageSize class="form-control" (change)="pageSizeChange(selectedPageSize.value)">
                         <option *ngFor="let ps of pageSizeList" [value]="ps" [selected]="ps.id == 0">{{ps}}</option>
                     </select>
