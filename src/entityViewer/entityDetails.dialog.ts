@@ -6,7 +6,7 @@ import {NgbModal, NgbActiveModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap"
     template: `
         <div class="modal-header">
             <button type="button" class="close" (click)="cancel()" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">{{type}} Details</h4>
+            <h4 class="modal-title">{{type}} details</h4>
         </div>
         <div class="modal-body">
             <form endUserRole="form" class="container-fluid">
@@ -36,7 +36,7 @@ import {NgbModal, NgbActiveModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap"
             <button type="button" class="btn"
                     (click)="cancel()">Close</button>
             <button type="button" class="btn btn-primary"
-                    (click)="ok();">View Full Details</button>
+                    (click)="ok();">View full details</button>
         </div>
     `
 
