@@ -7,12 +7,15 @@ import { DatePipe } from "@angular/common";
 })
 export class PeriodPipe implements PipeTransform{
 
-    transform(period: Period) : any {
+    transform(period: Period, format: string) : any {
         if (period) {
             var datePipe = new DatePipe('en-US');
 
-            const start = (period.start == null) ? '' : datePipe.transform(period.start, 'dd/MM/yyyy');
-            const end = (period.end == null) ? '' : datePipe.transform(period.end, 'dd/MM/yyyy');
+            if (format == null || format == '')
+              format = 'dd/MM/yyyy';
+
+            const start = (period.start == null) ? '' : datePipe.transform(period.start, format);
+            const end = (period.end == null) ? '' : datePipe.transform(period.end, format);
 
             return '(' + start.toString() + ' - ' + end.toString() + ')';
         }
