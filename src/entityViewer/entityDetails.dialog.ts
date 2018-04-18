@@ -16,8 +16,14 @@ import {NgbModal, NgbActiveModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap"
                     </div>
                 </div>
                 <div *ngFor="let detail of detailsToShow" class="row">
-                    <div *ngIf="!detail.document" class="form-group col-md-12">
+                    <div *ngIf="!detail.document && detail.label != 'Status' && detail.label != 'Flow status'" class="form-group col-md-12">
                         <b>{{detail.label}} : </b>{{item[detail.property]}}
+                    </div>
+                    <div *ngIf="!detail.document && detail.label === 'Status'" class="form-group col-md-12">
+                        <b>{{detail.label}} : </b>{{getStatus(item[detail.property])}}
+                    </div>
+                    <div *ngIf="!detail.document && detail.label === 'Flow status'" class="form-group col-md-12">
+                        <b>{{detail.label}} : </b>{{getFlowStatus(item[detail.property])}}
                     </div>
                     <div *ngIf="detail.document" class="form-group col-md-12">
                         <h4>Document</h4>
@@ -71,5 +77,21 @@ export class EntityDetailsDialog {
 
     cancel() {
         this.activeModal.dismiss(false);
+    }
+
+    getStatus(id: number) {
+        if (id == 0) {
+            return "Active"
+        } else {
+            return "Inactive"
+        }
+    }
+
+    getFlowStatus(id: number) {
+        if (id == 0) {
+            return "In Development"
+        } else {
+            return "Live"
+        }
     }
 }
