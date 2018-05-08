@@ -1,6 +1,6 @@
 {
   "name": "eds-angular4",
-  "version": "1.0.37",
+  "version": "1.0.38",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "devDependencies": {

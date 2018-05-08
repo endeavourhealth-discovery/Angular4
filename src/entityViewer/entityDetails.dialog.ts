@@ -16,7 +16,7 @@ import {NgbModal, NgbActiveModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap"
                     </div>
                 </div>
                 <div *ngFor="let detail of detailsToShow" class="row">
-                    <div *ngIf="!detail.document && detail.label != 'Status' && detail.label != 'Flow status'" class="form-group col-md-12">
+                    <div *ngIf="!detail.document && detail.label != 'Status' && detail.label != 'Flow status' && !detail.label.toString().toLowerCase().includes('date')" class="form-group col-md-12">
                         <b>{{detail.label}} : </b>{{item[detail.property]}}
                     </div>
                     <div *ngIf="!detail.document && detail.label === 'Status'" class="form-group col-md-12">
@@ -24,6 +24,9 @@ import {NgbModal, NgbActiveModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap"
                     </div>
                     <div *ngIf="!detail.document && detail.label === 'Flow status'" class="form-group col-md-12">
                         <b>{{detail.label}} : </b>{{getFlowStatus(item[detail.property])}}
+                    </div>
+                    <div *ngIf="!detail.document && detail.label.toString().toLowerCase().includes('date')" class="form-group col-md-12">
+                        <b>{{detail.label}} : </b>{{item[detail.property] | date :'dd-MM-yyyy'}}
                     </div>
                     <div *ngIf="detail.document" class="form-group col-md-12">
                         <h4>Document</h4>
