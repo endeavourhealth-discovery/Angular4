@@ -66,12 +66,17 @@ export class EntityViewer {
     @Input() secondaryOrderText : string = this.secondary;
     @Input() pageSize : number = 12;
     @Input() allowDelete : boolean = false;
+    @Input() noLink : boolean = false;
 
     @Output() deleted: EventEmitter<string> = new EventEmitter<string>();
+    @Output() clicked: EventEmitter<string> = new EventEmitter<string>();
 
     delete(item : any) {
         this.deleted.next(item);
+    }
 
+    clickOnItem(item: any) {
+        this.clicked.next(item);
     }
 
     public filterText : string = "";
@@ -193,6 +198,10 @@ export class EntityViewer {
 
     private viewItemDetails(item : any) {
         var vm = this;
+        if (vm.noLink) {
+            this.clickOnItem(item);
+            return;
+        }
         EntityDetailsDialog.open(vm.$modal, item, vm.detailsToShow, vm.primary, vm.typeDescription)
             .result.then(function
                 (result: boolean) {
