@@ -16,7 +16,7 @@ import {NgbModal, NgbActiveModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap"
                     </div>
                 </div>
                 <div *ngFor="let detail of detailsToShow" class="row">
-                    <div *ngIf="!detail.document && detail.label != 'Status' && detail.label != 'Flow status' && !detail.label.toString().toLowerCase().includes('date')" class="form-group col-md-12">
+                    <div *ngIf="!detail.document && detail.label != 'Status' && detail.label != 'Flow status' && !detail.label.toString().toLowerCase().includes('date') && detail.label != 'Type'" class="form-group col-md-12">
                         <b>{{detail.label}} : </b>{{item[detail.property]}}
                     </div>
                     <div *ngIf="!detail.document && detail.label === 'Status'" class="form-group col-md-12">
@@ -24,6 +24,9 @@ import {NgbModal, NgbActiveModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap"
                     </div>
                     <div *ngIf="!detail.document && detail.label === 'Flow status'" class="form-group col-md-12">
                         <b>{{detail.label}} : </b>{{getFlowStatus(item[detail.property])}}
+                    </div>
+                    <div *ngIf="!detail.document && detail.label === 'Type'" class="form-group col-md-12">
+                        <b>{{detail.label}} : </b>{{getOrganisationType(item[detail.property])}}
                     </div>
                     <div *ngIf="!detail.document && detail.label.toString().toLowerCase().includes('date')" class="form-group col-md-12">
                         <b>{{detail.label}} : </b>{{item[detail.property] | date :'dd-MM-yyyy'}}
@@ -95,6 +98,87 @@ export class EntityDetailsDialog {
             return "In Development"
         } else {
             return "Live"
+        }
+    }
+
+    getOrganisationType(id: number) {
+        switch (id) {
+            case 0:
+                return "GP Practice";
+            case 1:
+                return "NHS Trust";
+            case 2:
+                return "NHS Trust Site";
+            case 3:
+                return "Pathology Laboratory";
+            case 4:
+                return "Branch";
+            case 5:
+                return "Commissioning Region";
+            case 6:
+                return "Care Trust";
+            case 7:
+                return "Care Trust Site";
+            case 8:
+                return "CCG";
+            case 9:
+                return "CCG Site";
+            case 10:
+                return "CSU";
+            case 11:
+                return "CSU Site";
+            case 12:
+                return "Education Establishment";
+            case 13:
+                return "NHS Hospice";
+            case 14:
+                return "Non NHS Hospice";
+            case 15:
+                return "IoM Government Directorate";
+            case 16:
+                return "IoM Government Department";
+            case 17:
+                return "Justice Entity";
+            case 18:
+                return "Non NHS Organisation";
+            case 19:
+                return "NHS Support Agency";
+            case 20:
+                return "Optical HQ";
+            case 21:
+                return "Optical Site";
+            case 22:
+                return "Other";
+            case 23:
+                return "Pharmacy HQ";
+            case 24:
+                return "ISHP";
+            case 25:
+                return "ISHP Site";
+            case 26:
+                return "Prison";
+            case 27:
+                return "School";
+            case 28:
+                return "Special Health Authority";
+            case 29:
+                return "Local Authority";
+            case 30:
+                return "Local Authority Site";
+            case 31:
+                return "NI organisation";
+            case 32:
+                return "Scottish GP Practice";
+            case 33:
+                return "Scottish Provider Organisation";
+            case 34:
+                return "Wales Health Board";
+            case 35:
+                return "Wales Health Board Site";
+            case 36:
+                return "Dispensary";
+            case 37:
+                return "IoM Government Directorate Site";
         }
     }
 }
