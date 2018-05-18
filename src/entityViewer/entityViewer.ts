@@ -166,6 +166,10 @@ export class EntityViewer {
                 this.router.navigate(['/cohort', item.uuid, 'edit']);
                 break;
             }
+            case "dataexchange" : {
+                this.router.navigate(['/dataExchange', item.uuid, 'edit']);
+                break;
+            }
         }
     }
 

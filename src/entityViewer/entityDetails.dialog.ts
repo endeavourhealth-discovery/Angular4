@@ -16,7 +16,7 @@ import {NgbModal, NgbActiveModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap"
                     </div>
                 </div>
                 <div *ngFor="let detail of detailsToShow" class="row">
-                    <div *ngIf="!detail.document && detail.label != 'Status' && detail.label != 'Flow status' && !detail.label.toString().toLowerCase().includes('date') && detail.label != 'Type'" class="form-group col-md-12">
+                    <div *ngIf="!detail.document && detail.label != 'Status' && detail.label != 'Flow status' && detail.label === 'Publisher or subscriber' && !detail.label.toString().toLowerCase().includes('date') && detail.label != 'Type'" class="form-group col-md-12">
                         <b>{{detail.label}} : </b>{{item[detail.property]}}
                     </div>
                     <div *ngIf="!detail.document && detail.label === 'Status'" class="form-group col-md-12">
@@ -27,6 +27,9 @@ import {NgbModal, NgbActiveModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap"
                     </div>
                     <div *ngIf="!detail.document && detail.label === 'Type'" class="form-group col-md-12">
                         <b>{{detail.label}} : </b>{{getOrganisationType(item[detail.property])}}
+                    </div>
+                    <div *ngIf="!detail.document && detail.label === 'Publisher or subscriber'" class="form-group col-md-12">
+                        <b>{{detail.label}} : </b>{{getPubOrSub(item[detail.property])}}
                     </div>
                     <div *ngIf="!detail.document && detail.label.toString().toLowerCase().includes('date')" class="form-group col-md-12">
                         <b>{{detail.label}} : </b>{{item[detail.property] | date :'dd-MM-yyyy'}}
@@ -98,6 +101,14 @@ export class EntityDetailsDialog {
             return "In Development"
         } else {
             return "Live"
+        }
+    }
+
+    getPubOrSub(id: number) {
+        if (id == 0) {
+            return "Subscriber"
+        } else {
+            return "Publisher"
         }
     }
 
