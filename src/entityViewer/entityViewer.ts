@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 @Component({
     selector : 'entity-viewer',
     template : `
-        <div class="row">
+        <div class="row" *ngIf="!noSearch">
             <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-addon" id="searchOrg">Search</span>
@@ -67,6 +67,7 @@ export class EntityViewer {
     @Input() pageSize : number = 12;
     @Input() allowDelete : boolean = false;
     @Input() noLink : boolean = false;
+    @Input() noSearch: boolean = false;
 
     @Output() deleted: EventEmitter<string> = new EventEmitter<string>();
     @Output() clicked: EventEmitter<string> = new EventEmitter<string>();
@@ -121,13 +122,13 @@ export class EntityViewer {
 
     populateOrderList() {
         this.orderList = [
-            {id: 0, name: this.primaryOrderText + " asc"},
-            {id: 1, name: this.primaryOrderText + " desc"},
+            {id: 0, name: this.primaryOrderText + " (A-Z)"},
+            {id: 1, name: this.primaryOrderText + " (Z-A)"},
         ];
 
         if (this.secondary) {
-            this.orderList.push({id: 2, name: this.secondaryOrderText + " asc"});
-            this.orderList.push({id: 3, name: this.secondaryOrderText + " desc"});
+            this.orderList.push({id: 2, name: this.secondaryOrderText + " (A-Z)"});
+            this.orderList.push({id: 3, name: this.secondaryOrderText + " (Z-A)"});
         }
     }
 

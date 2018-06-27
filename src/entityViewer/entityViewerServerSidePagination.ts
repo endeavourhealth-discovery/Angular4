@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 @Component({
     selector : 'entity-viewer-ssp',
     template : `
-        <div class="row">
+        <div class="row" *ngIf="!noSearch">
             <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-addon" id="searchOrg">Search</span>
@@ -71,16 +71,22 @@ export class EntityViewerServerSidePagination {
     @Input() pageNumber : number = 1;
     @Input() maxPageSize : number = 48;
     @Input() allowDelete : boolean = false;
+    @Input() noLink : boolean = false;
+    @Input() noSearch: boolean = false;
 
     @Output() deleted: EventEmitter<string> = new EventEmitter<string>();
     @Output() onPageChange: EventEmitter<number> = new EventEmitter<number>();
     @Output() onPageSizeChange: EventEmitter<number> = new EventEmitter<number>();
     @Output() search: EventEmitter<string> = new EventEmitter<string>();
     @Output() onOrderChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output() clicked: EventEmitter<string> = new EventEmitter<string>();
 
     delete(item : any) {
         this.deleted.next(item);
+    }
 
+    clickOnItem(item: any) {
+        this.clicked.next(item);
     }
 
     pageChanged($event) {
@@ -132,13 +138,13 @@ export class EntityViewerServerSidePagination {
     populateOrderList() {
         var vm = this;
         vm.orderList = [
-            {id: 0, name: vm.primaryOrderText + " asc", column: vm.primary, descending: false},
-            {id: 1, name: vm.primaryOrderText + " desc", column: vm.primary, descending: true},
+            {id: 0, name: vm.primaryOrderText + " (A-Z)", column: vm.primary, descending: false},
+            {id: 1, name: vm.primaryOrderText + " (Z-A)", column: vm.primary, descending: true},
         ];
 
         if (vm.secondary) {
-            vm.orderList.push({id: 2, name: vm.secondaryOrderText + " asc", column: vm.secondary, descending: false});
-            vm.orderList.push({id: 3, name: vm.secondaryOrderText + " desc", column: vm.secondary, descending: true});
+            vm.orderList.push({id: 2, name: vm.secondaryOrderText + " (A-Z)", column: vm.secondary, descending: false});
+            vm.orderList.push({id: 3, name: vm.secondaryOrderText + " (Z-A)", column: vm.secondary, descending: true});
         }
 
         if (vm.order === undefined) {
@@ -197,6 +203,10 @@ export class EntityViewerServerSidePagination {
 
     private viewItemDetails(item : any) {
         var vm = this;
+        if (vm.noLink) {
+            this.clickOnItem(item);
+            return;
+        }
         EntityDetailsDialog.open(vm.$modal, item, vm.detailsToShow, vm.primary, vm.typeDescription)
             .result.then(function
                 (result: boolean) {
