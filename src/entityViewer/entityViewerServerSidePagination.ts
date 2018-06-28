@@ -42,8 +42,8 @@ import {Router} from "@angular/router";
             <div *ngFor="let item of items" class="col-md-3">
                 <div [ngClass]="displayClass">
                     <span><b>{{item[primary]}}</b><br><p *ngIf="secondary">{{item[secondary]}}<p></span>
-                    <i (click)="delete(item)" class="fa fa-trash pull-left" aria-hidden="true"></i>
-                    <i (click)="viewItemDetails(item)" class="fa fa-info-circle pull-right" aria-hidden="true"></i>
+                    <i (click)="delete(item)" class="fa fa-trash pull-left" aria-hidden="true" style="color:red"></i>
+                    <i (click)="viewItemDetails(item)" class="fa fa-info-circle pull-right" aria-hidden="true" style="color:mediumblue"></i>
                 </div>
             </div>
         </div>
