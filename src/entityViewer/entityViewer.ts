@@ -37,7 +37,7 @@ import {Router} from "@angular/router";
             </div>
         </div>
         <div *ngIf="items?.length > 0" class="row">
-            <div *ngFor="let item of items | entityFilterPipe:filterText: primary : secondary | orderBy : orderField: reverseOrder | paginate: {id: typeDescription, itemsPerPage: pageSize, currentPage: p } " class="col-md-3">
+            <div *ngFor="let item of items | entityFilterPipe:filterText: primary : secondary | orderBy : orderField: reverseOrder: true | paginate: {id: typeDescription, itemsPerPage: pageSize, currentPage: p } " class="col-md-3">
                 <div [ngClass]="displayClass">
                     <span><b>{{item[primary]}}</b><br><p *ngIf="secondary">{{item[secondary]}}<p></span>
                     <i (click)="delete(item)" class="fa fa-trash pull-left" aria-hidden="true" style="color:red"></i>
