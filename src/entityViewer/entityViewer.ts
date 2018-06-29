@@ -206,6 +206,10 @@ export class EntityViewer {
             this.clickOnItem(item);
             return;
         }
+
+
+        vm.editItem(item);
+        /*
         EntityDetailsDialog.open(vm.$modal, item, vm.detailsToShow, vm.primary, vm.typeDescription)
             .result.then(function
                 (result: boolean) {
@@ -213,6 +217,6 @@ export class EntityViewer {
                     vm.editItem(item);
                 }
             }
-        );
+        );*/
     }
 }
