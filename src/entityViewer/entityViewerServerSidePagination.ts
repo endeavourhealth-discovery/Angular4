@@ -206,13 +206,15 @@ export class EntityViewerServerSidePagination {
             this.clickOnItem(item);
             return;
         }
-        EntityDetailsDialog.open(vm.$modal, item, vm.detailsToShow, vm.primary, vm.typeDescription)
+        vm.editItem(item);
+
+        /*EntityDetailsDialog.open(vm.$modal, item, vm.detailsToShow, vm.primary, vm.typeDescription)
             .result.then(function
                 (result: boolean) {
                 if (result == true){
                     vm.editItem(item);
                 }
             }
-        );
+        );*/
     }
 }
