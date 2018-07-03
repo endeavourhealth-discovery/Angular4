@@ -1,6 +1,6 @@
 {
   "name": "eds-angular4",
-  "version": "1.0.51",
+  "version": "1.0.52",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "devDependencies": {
@@ -20,11 +20,11 @@
     "@angular/router": "4.2.6",
     "@ng-bootstrap/ng-bootstrap": "1.0.0-alpha.26",
     "angular-tree-component": "^7.0.1",
-		"css-element-queries": "^1.0.2",
+    "css-element-queries": "^1.0.2",
     "highcharts": "^5.0.9",
     "jquery": "^3.3.1",
-		"ng2-nvd3": "^2.0.0",
-		"ng2-pdf-viewer": "1.2.2",
+    "ng2-nvd3": "^2.0.0",
+    "ng2-pdf-viewer": "1.2.2",
     "ng2-toastr": "^4.1.2",
     "ngx-pagination": "^3.0.1",
     "primeng": "^4.3.0",
