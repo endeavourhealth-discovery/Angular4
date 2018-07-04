@@ -50,8 +50,8 @@ import {NgbModal, NgbActiveModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap"
         <div class="modal-footer">
             <button type="button" class="btn"
                     (click)="cancel()">Close</button>
-            <button type="button" class="btn btn-primary"
-                    (click)="ok();">View full details</button>
+            <!--<button type="button" class="btn btn-primary"
+                    (click)="ok();">View full details</button>-->
         </div>
     `
 
