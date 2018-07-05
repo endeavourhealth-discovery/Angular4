@@ -13,11 +13,11 @@ import {User} from "../security/models/User";
 		<div class="pull-right" style="padding: 10px;color:gray">
 
 			<div ngbDropdown class="d-inline-block">
-				Logged in :
+				Signed in :
 				<button class="btn btn-info btn-sm" id="userDropdown" ngbDropdownToggle>{{currentUser.title}} {{currentUser.forename}} {{currentUser.surname}}</button>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 					<button class="dropdown-item"(click)="navigateUserAccount()"><i class="fa fa-user-circle-o"></i> User account</button>
-					<button class="dropdown-item"(click)="logout()"><i class="fa fa-power-off"></i> Logout</button>
+					<button class="dropdown-item"(click)="logout()"><i class="fa fa-power-off"></i> Sign out</button>
 				</div>
 			</div>
 		</div>
