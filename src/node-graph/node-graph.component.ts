@@ -8,7 +8,9 @@ import {ResizeSensor} from 'css-element-queries';
   template: '<svg #graphSvg></svg>'
 })
 export class NodeGraphComponent implements AfterViewInit {
-  data: any;
+	static globalId: number = 1;
+
+	instanceId: string;
   nodeData: GraphNode[] = [];
   edgeData: GraphEdge[] = [];
   svg: any;
@@ -25,8 +27,8 @@ export class NodeGraphComponent implements AfterViewInit {
 
   colors = d3.scale.category10();
 
-
-  @ViewChild('graphSvg') graphSvg: ElementRef;
+  @ViewChild('graphSvg')
+	graphSvg: ElementRef;
 
   @Output()
   nodeClick = new EventEmitter();
@@ -40,8 +42,10 @@ export class NodeGraphComponent implements AfterViewInit {
   constructor() { }
 
   ngAfterViewInit() {
+		this.instanceId = 'svg_' + NodeGraphComponent.globalId++;
+		this.graphSvg.nativeElement.id = this.instanceId;
     this.initialize();
-    let rs = new ResizeSensor(this.graphSvg.nativeElement.parentElement.parentElement, () => this.onResize(this.svg, this.force))
+    let rs = new ResizeSensor(this.graphSvg.nativeElement.parentElement.parentElement, () => this.onResize(this.svg, this.force));
   }
 
   initialize() {
@@ -52,9 +56,9 @@ export class NodeGraphComponent implements AfterViewInit {
     const vPadding = parseFloat(computedStyle.paddingTop) + parseFloat(computedStyle.paddingBottom) + 5;
     const height = parseFloat(computedStyle.height) - vPadding;
 
-    d3.select('svg').selectAll("*").remove();
+    d3.select('#'+this.instanceId).selectAll("*").remove();
 
-    this.svg = d3.select('svg')
+    this.svg = d3.select('#'+this.instanceId)
       .attr('width', width)
       .attr('height', height);
 
@@ -95,7 +99,6 @@ export class NodeGraphComponent implements AfterViewInit {
   }
 
   clear() {
-    this.data = null;
     this.nodeData = [];
     this.edgeData = [];
     this.initialize();
@@ -123,7 +126,7 @@ export class NodeGraphComponent implements AfterViewInit {
     this.edges = this.edges.data(this.force.links());
     this.edges.enter()
       .append('line')
-      .attr('id', (d, i) => 'edge' + i)
+      .attr('id', (d, i) => this.instanceId + '_edge' + i)
       .attr('marker-end', 'url(#arrowhead)')
       .attr('overflow', 'invisible')
       .style('pointer-events', 'none')
@@ -159,7 +162,7 @@ export class NodeGraphComponent implements AfterViewInit {
         'stroke-opacity': 0,
         'fill': 'blue',
         'stroke': 'red',
-        'id': (d, i) => 'edgepath' + i })
+        'id': (d, i) => this.instanceId + '_edgepath' + i })
        .style('pointer-events', 'none');
     this.edgepaths.exit().remove();
 
@@ -167,14 +170,14 @@ export class NodeGraphComponent implements AfterViewInit {
     this.edgelabels.enter()
       .append('text')
       .attr({'class': 'edgelabel',
-        'id': (d, i) => 'edgelabel' + i,
+        'id': (d, i) => this.instanceId + '_edgelabel' + i,
         'dx': (d,i) => (this.linkDistance * 0.5) - (d.label.length * 2.5),
         'dy': 0,
         'font-size': 10,
         'fill': '#aaa'})
       .on("click", (link) => this.linkClicked(link))
       .append('textPath')
-      .attr('xlink:href', (d, i) => '#edgepath' + i)
+      .attr('xlink:href', (d, i) => '#' + this.instanceId + '_edgepath' + i)
       .text((d: any, i) => d.label);
     this.edgelabels.exit().remove();
 
