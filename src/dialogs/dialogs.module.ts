@@ -4,6 +4,7 @@ import {FormsModule} from "@angular/forms";
 
 import {InputBoxDialog} from "./inputBox/inputBox.dialog";
 import {MessageBoxDialog} from "./messageBox/messageBox.dialog";
+import {InputBoxMultiLineDialog} from './inputBox/inputBoxMultiLine.dialog';
 
 @NgModule({
 	imports : [
@@ -12,10 +13,12 @@ import {MessageBoxDialog} from "./messageBox/messageBox.dialog";
 	],
 	declarations : [
 		InputBoxDialog,
+		InputBoxMultiLineDialog,
 		MessageBoxDialog,
 	],
 	entryComponents : [
 		InputBoxDialog,
+		InputBoxMultiLineDialog,
 		MessageBoxDialog,
 	]
 })
