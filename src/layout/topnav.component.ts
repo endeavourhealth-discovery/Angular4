@@ -23,34 +23,33 @@ import {User} from "../security/models/User";
 		</div>
 	</div>`,
   styles: [`
-			.title-text {
-      font-size: 18px;
-      line-height: 50px;
-      color: gray;
-      margin-left:10px;
-      vertical-align: middle;
-  }
+      .title-bar {
+          position: fixed;
+          background: #fbfbfb;
+          z-index:1001;
+          width: 100%;
+      }
+      .title-text {
+          font-size: 28px;
+          line-height: 50px;
+          color: gray;
+          margin-left:10px;
+          vertical-align: middle;
+      }
 
-  .loggedin-text {
-      color: gray;
-      line-height: 50px;
-      vertical-align: middle;
-      margin-right: 10px;
-  }
+      .loggedin-text {
+          color: gray;
+          line-height: 50px;
+          vertical-align: middle;
+          margin-right: 10px;
+      }
 
-  .nhs-logo {
-      height: 50px;
-      width: 60px;
-      line-height: 50px;
-      vertical-align: middle;
-      text-align: center;
-      font-size: 20px;
-      color: #fff;
-      float: left;
-      font-style: italic;
-      font-weight: bold;
-      background: #337ab7 linear-gradient(to bottom, #337ab7 0%, #2e6da4 100%) repeat-x;
-  }`]
+      .logo-image {
+          height: 50px;
+          width: 50px;
+          margin: 5px;
+      }
+	`]
 })
 export class TopnavComponent implements OnInit {
   currentUser:User;
