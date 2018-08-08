@@ -7,6 +7,7 @@ import {LayoutComponent} from "./layout.component";
 import {RouterModule} from "@angular/router";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {SecurityModule} from "../security/security.module";
+import {UserManagerModule} from "../user-manager/user-manager.module";
 import {MenuAuth} from "./menuAuth.service";
 import {StopComponent} from "./stop.component";
 
@@ -16,6 +17,7 @@ import {StopComponent} from "./stop.component";
     BrowserModule,
     FormsModule,
     SecurityModule,
+    UserManagerModule,
     RouterModule,
     NgbModule
   ],

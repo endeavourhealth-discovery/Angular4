@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {AbstractMenuProvider} from "./menuProvider.service";
 import {SecurityService} from "../security/security.service";
 import {User} from "../security/models/User";
+import {UserRole} from "../user-manager/models/UserRole";
+import {UserManagerService} from "../user-manager/user-manager.service";
 
 @Component({
   selector: 'topnav',
@@ -17,6 +19,7 @@ import {User} from "../security/models/User";
 				<button class="btn btn-info btn-sm" id="userDropdown" ngbDropdownToggle>{{currentUser.title}} {{currentUser.forename}} {{currentUser.surname}}</button>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 					<button class="dropdown-item"(click)="navigateUserAccount()"><i class="fa fa-user-circle-o"></i> User account</button>
+                    <button *ngFor="let role of userRoles" class="dropdown-item"(click)="navigateUserAccount()"><i class="fa fa-user-circle-o"></i> {{role.roleTypeName}} @ {{role.organisationName}}</button>
 					<button class="dropdown-item"(click)="logout()"><i class="fa fa-power-off"></i> Sign out</button>
 				</div>
 			</div>
@@ -53,11 +56,17 @@ import {User} from "../security/models/User";
 })
 export class TopnavComponent implements OnInit {
   currentUser:User;
+  userRoles: UserRole[] = [];
 
-  constructor(private securityService:SecurityService, private menuProvider : AbstractMenuProvider) {
+  constructor(private securityService:SecurityService, private menuProvider : AbstractMenuProvider,
+              private userManagerService: UserManagerService) {
     let vm = this;
 
     vm.currentUser = this.securityService.getCurrentUser();
+    console.log(this.menuProvider.useUserManagerForRoles());
+    if (this.menuProvider.useUserManagerForRoles()) {
+        vm.getUserRoles();
+    }
   }
 
   ngOnInit(): void {
@@ -76,4 +85,14 @@ export class TopnavComponent implements OnInit {
   logout() {
     this.securityService.logout();
   };
+
+  getUserRoles() {
+    const vm = this;
+      vm.userManagerService.getUserRoles(vm.currentUser.uuid)
+          .subscribe(
+              (result) => {
+                  vm.userRoles = result;
+              }
+          );
+  }
 }
