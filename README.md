@@ -1,5 +1,16 @@
 # Angular4
 
+### Migration to 1.0.58 and above (common look & feel)
+* Update eds-angular4 entry to the latest version (package.json)
+* Delete FrontEnd/src/lessStyles.less
+* Delete assets folder
+* Remove `"lessStyles.less"` from the styles section of .angular-cli.json
+* Add `"../node_modules/eds-angular4/assets/javascript/keycloak.js"` to scripts section of .angular-cli.json
+* Remove `<script src="assets/javascript/keycloak.js">` from index.html
+* Update styles.css to only include node_modules references
+* Remove `assets/scss/index` from scssStyles.css
+* Add `@import "~eds-angular4/assets/scss/endeavour";` to scssStyles.css
+
 ### Making Changes
 
 To make changes to the common angular code, you will need to perform the following steps.
