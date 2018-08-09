@@ -6,5 +6,6 @@ export class UserRole {
 	organisationId: string;
 	organisationName: string;
 	userAccessProfileId: string;
-	deleted: boolean;
+    deleted: boolean;
+    default: boolean;
 }

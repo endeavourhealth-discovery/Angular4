@@ -18,8 +18,8 @@ import {UserManagerService} from "../user-manager/user-manager.service";
 				Signed in :
 				<button class="btn btn-info btn-sm" id="userDropdown" ngbDropdownToggle>{{currentUser.title}} {{currentUser.forename}} {{currentUser.surname}}</button>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-					<button class="dropdown-item"(click)="navigateUserAccount()"><i class="fa fa-user-circle-o"></i> User account</button>
-                    <button *ngFor="let role of userRoles" class="dropdown-item"(click)="navigateUserAccount()"><i class="fa fa-user-circle-o"></i> {{role.roleTypeName}} @ {{role.organisationName}}</button>
+					<button  class="dropdown-item"(click)="navigateUserAccount()"><i class="fa fa-user-circle-o"></i> User account</button>
+                    <button *ngFor="let role of userRoles" class="dropdown-item"(click)="changeRole(role)"><i class="fa fa-user-circle-o"></i> {{role.roleTypeName}} @ {{role.organisationName}}</button>
 					<button class="dropdown-item"(click)="logout()"><i class="fa fa-power-off"></i> Sign out</button>
 				</div>
 			</div>
@@ -63,7 +63,6 @@ export class TopnavComponent implements OnInit {
     let vm = this;
 
     vm.currentUser = this.securityService.getCurrentUser();
-    console.log(this.menuProvider.useUserManagerForRoles());
     if (this.menuProvider.useUserManagerForRoles()) {
         vm.getUserRoles();
     }
@@ -92,7 +91,23 @@ export class TopnavComponent implements OnInit {
           .subscribe(
               (result) => {
                   vm.userRoles = result;
+                  vm.findDefaultRole();
               }
           );
+  }
+
+  findDefaultRole() {
+    const vm = this;
+    for (let role of vm.userRoles) {
+      if (role.default) {
+        vm.changeRole(role);
+        return;
+      }
+    }
+  }
+
+  changeRole(role: UserRole) {
+    const vm = this;
+    vm.userManagerService.changeUserRole(role);
   }
 }
