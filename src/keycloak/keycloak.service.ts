@@ -40,7 +40,7 @@ export class KeycloakService {
           KeycloakService.auth.loggedIn = true;
           KeycloakService.auth.authz = keycloakAuth;
           KeycloakService.auth.logoutUrl = keycloakAuth.authServerUrl
-            + '/realms/endeavour/protocol/openid-connect/logout?redirect_uri='
+            + '/realms/' + config.realm + '/protocol/openid-connect/logout?redirect_uri='
             + document.baseURI;
           resolve();
         })
