@@ -98,11 +98,16 @@ export class TopnavComponent implements OnInit {
 
   findDefaultRole() {
     const vm = this;
+    let fallbackRole : UserRole = null;
     for (let role of vm.userRoles) {
+      fallbackRole = role;
       if (role.default) {
         vm.changeRole(role);
         return;
       }
+    }
+    if (fallbackRole != null) {
+        vm.changeRole(fallbackRole);
     }
   }
 
