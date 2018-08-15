@@ -16,9 +16,18 @@ export class UserManagerService {
         const vm = this;
         let params = new URLSearchParams();
         params.set('userId', userId);
-        console.log('service', userId);
         return vm.http.get('api/userManager/getRoles', {search: params})
             .map((response) => response.json());
+    }
+
+    changeDefaultRole(userId: string, defaultRole: string, userRoleId: string): Observable<any> {
+        const vm = this;
+        let params = new URLSearchParams();
+        params.set('userId', userId);
+        params.set('defaultRoleId', defaultRole);
+        params.set('userRoleId', userRoleId);
+        return vm.http.get('api/userManager/setDefaultRole', {search: params})
+            .map((response) => response.text());
     }
 
 

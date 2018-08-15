@@ -272,3 +272,12 @@ body {
   content: "\2122";
   color: transparent !important;
 }
+
+.role-menu-description.active{
+  background: $theme-colour;
+  color: #ffffff !important;
+}
+
+.role-menu-description.hoverable:hover {
+  background-color: $theme-light;
+}
