@@ -38,8 +38,8 @@ import {LoggerService} from "../logger/logger.service";
                     </div>
                     <div class="dropdown-item">
                         <div class="pull-right">
-                          <button class="button btn-success"(click)="navigateUserAccount()"><i class="fa fa-user-circle-o"></i> User account</button>
-                          <button class="button btn-danger"(click)="logout()"><i class="fa fa-power-off"></i> Sign out</button>
+                          <button type="button" class="btn btn-success"(click)="navigateUserAccount()">User account</button>
+                          <button type="button" class="btn btn-danger"(click)="logout()">Sign out</button>
                         </div>
                     </div>
                     
