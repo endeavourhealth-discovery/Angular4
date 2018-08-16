@@ -11,7 +11,7 @@ import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'
 		</button>
 	</div>
 	<div class="modal-body">
-		{{message}}
+		<span [innerHtml]="message"></span>
 	</div>
 	<div class="modal-footer">
 		<button *ngIf="okText" type="button" class="btn btn-success" (click)="activeModal.close()">{{okText}}</button>
