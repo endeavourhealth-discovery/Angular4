@@ -105,8 +105,8 @@ export class TopnavComponent implements OnInit {
 
   navigateUserAccount() {
     var url = window.location.protocol + "//" + window.location.host;
-    url = url + "/user-manager/#/app/users/userManagerUserView";
-    window.location.href = url;
+    url = url + "/new-user-manager/#/userView";
+    window.open(url, '_blank');
   }
 
   logout() {
