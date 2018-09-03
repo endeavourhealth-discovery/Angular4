@@ -22,7 +22,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 					</table>
 				</div>				
 			</ng-template>
-			<span [ngbTooltip]="tooltipTemplate"><i [ngClass]="getIcon(item)"></i> {{item.name}}</span>
+			<span [ngbTooltip]="tooltipTemplate"><i [ngClass]="getIcon(item)"></i> {{item[nameField]}}</span>
 		</div>
 	</div>
 </div>`,
@@ -46,6 +46,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 })
 export class MultiSelectDropdownComponent implements ControlValueAccessor {
 	@Input() data : any[];
+	@Input() nameField: string = 'name';
 
 	private selectedItems : any[] = [];
 	private changed = [];
