@@ -187,6 +187,10 @@ export class EntityViewerServerSidePagination {
                 this.router.navigate(['/cohort', item.uuid, 'edit']);
                 break;
             }
+            case "project" : {
+                this.router.navigate(['/project', item.uuid, 'edit']);
+                break;
+            }
         }
     }
 

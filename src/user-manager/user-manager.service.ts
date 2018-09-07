@@ -20,7 +20,7 @@ export class UserManagerService {
             .map((response) => response.json());
     }
 
-    changeDefaultRole(userId: string, defaultRole: string, userRoleId: string): Observable<any> {
+    changeDefaultRole(userId: string, defaultRole: string, userRoleId: string): Observable<string> {
         const vm = this;
         let params = new URLSearchParams();
         params.set('userId', userId);
