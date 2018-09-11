@@ -2,51 +2,59 @@ import { Component, OnInit } from '@angular/core';
 import {AbstractMenuProvider} from "./menuProvider.service";
 import {SecurityService} from "../security/security.service";
 import {User} from "../security/models/User";
-import {UserRole} from "../user-manager/models/UserRole";
+import {UserProject} from "../user-manager/models/UserProject";
 import {UserManagerService} from "../user-manager/user-manager.service";
 import {LoggerService} from "../logger/logger.service";
 
 @Component({
   selector: 'topnav',
-  template: `  <div class="title-bar">
+  template: `
+      <div class="title-bar">
       <span class="navbar-header" style="width: 50%">
         <img class="logo-image">
         <span class="title-text">{{getApplicationTitle()}}</span>
       </span>
-		<div class="pull-right" style="padding: 10px;color:gray">
+          <div class="pull-right" style="padding: 10px;color:gray">
 
-            <div ngbDropdown class="d-inline-block">
-                Signed in :
-                <button class="btn btn-info btn-sm" id="roleDropdown" ngbDropdownToggle>{{currentUser.title}} {{currentUser.forename}} {{currentUser.surname}}</button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="roleDropdown">
-                    <div *ngFor="let role of userRoles" >
-                        <div  class="dropdown-item">
-                            <div class="row align-items-center">
-                                <div [ngClass]="{'active': role == selectedRole}" class="col-md-10 role-menu-description hoverable" (click)="changeRole(role)">
-                                    <p class="mb-0"><b>{{role.roleTypeName}}</b></p>
-                                    <p class="mb-0 text-uppercase"><small>{{role.organisationName}}</small></p>
-                                </div>
-                                <div *ngIf="role.default" class="col-md-2">
-                                    <i class="fa fa-star" (click)="setAsDefaultRole(role)"></i>
-                                </div>
-                                <div *ngIf="!role.default" class="col-md-2">
-                                    <i class="fa fa-star-o" (click)="setAsDefaultRole(role)"></i>
-                                </div>
-                            </div>
-                        </div>
-                      <div class="dropdown-divider"></div>
-                    </div>
-                    <div class="dropdown-item">
-                        <div class="pull-right">
-                          <button type="button" class="btn btn-success"(click)="navigateUserAccount()">User account</button>
-                          <button type="button" class="btn btn-danger"(click)="logout()">Sign out</button>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-		</div>
-	</div>`,
+              <div ngbDropdown class="d-inline-block">
+                  Signed in :
+                  <button class="btn btn-info btn-sm" id="roleDropdown" ngbDropdownToggle>{{currentUser.title}}
+                      {{currentUser.forename}} {{currentUser.surname}}
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="roleDropdown">
+                      <div *ngFor="let project of userProjects">
+                          <div class="dropdown-item">
+                              <div class="row align-items-center">
+                                  <div [ngClass]="{'active': project == selectedProject}"
+                                       class="col-md-10 role-menu-description hoverable" (click)="changeRole(role)">
+                                      <p class="mb-0"><b>{{project.projectName}}</b></p>
+                                      <p class="mb-0 text-uppercase">
+                                          <small>{{project.organisationName}}</small>
+                                      </p>
+                                  </div>
+                                  <div *ngIf="project.default" class="col-md-2">
+                                      <i class="fa fa-star" (click)="setAsDefaultRole(role)"></i>
+                                  </div>
+                                  <div *ngIf="!project.default" class="col-md-2">
+                                      <i class="fa fa-star-o" (click)="setAsDefaultRole(role)"></i>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="dropdown-divider"></div>
+                      </div>
+                      <div class="dropdown-item">
+                          <div class="pull-right">
+                              <button type="button" class="btn btn-success" (click)="navigateUserAccount()">User
+                                  account
+                              </button>
+                              <button type="button" class="btn btn-danger" (click)="logout()">Sign out</button>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+      </div>`,
   styles: [`
       .title-bar {
           position: fixed;
@@ -78,8 +86,8 @@ import {LoggerService} from "../logger/logger.service";
 })
 export class TopnavComponent implements OnInit {
   currentUser:User;
-  userRoles: UserRole[] = [];
-  selectedRole: UserRole;
+  userProjects: UserProject[] = [];
+  selectedProject: UserProject;
   roleDetails = false;
 
   constructor(private securityService:SecurityService, private menuProvider : AbstractMenuProvider,
@@ -115,10 +123,10 @@ export class TopnavComponent implements OnInit {
 
   getUserRoles(setdefault: boolean = true) {
     const vm = this;
-      vm.userManagerService.getUserRoles(vm.currentUser.uuid)
+      vm.userManagerService.getUserProjects(vm.currentUser.uuid)
           .subscribe(
               (result) => {
-                  vm.userRoles = result;
+                  vm.userProjects = result;
                   if (setdefault) {
                       vm.findDefaultRole();
                   } else  {
@@ -130,8 +138,8 @@ export class TopnavComponent implements OnInit {
 
   findDefaultRole() {
     const vm = this;
-    let fallbackRole : UserRole = null;
-    for (let role of vm.userRoles) {
+    let fallbackRole : UserProject = null;
+    for (let role of vm.userProjects) {
       fallbackRole = role;
       if (role.default) {
         vm.changeRole(role);
@@ -145,29 +153,29 @@ export class TopnavComponent implements OnInit {
 
   setCurrentlyActiveRole() {
       const vm = this;
-      for (let role of vm.userRoles) {
-          if (role.id === vm.selectedRole.id) {
-              vm.selectedRole = role;
+      for (let role of vm.userProjects) {
+          if (role.id === vm.selectedProject.id) {
+              vm.selectedProject = role;
           }
       }
   }
 
-  changeRole(role: UserRole) {
+  changeRole(role: UserProject) {
     const vm = this;
-    vm.selectedRole = role;
+    vm.selectedProject = role;
     vm.userManagerService.changeUserRole(role);
   }
 
-  setAsDefaultRole(role: UserRole) {
+  setAsDefaultRole(role: UserProject) {
       const vm = this;
-      vm.userManagerService.changeDefaultRole(vm.currentUser.uuid, role.id, vm.selectedRole.id)
+      vm.userManagerService.changeDefaultProject(vm.currentUser.uuid, role.id, vm.selectedProject.id)
           .subscribe(
               (result) => {
-                vm.logger.success('Default role changed', null, 'Change default role');
+                vm.logger.success('Default project changed', null, 'Change default project');
                 vm.getUserRoles(false);
               },
               (error) => {
-                  vm.logger.error('Error changing default role', error, 'Error');
+                  vm.logger.error('Error changing default project', error, 'Error');
               }
           );
   }

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {UserRole} from "./models/UserRole";
+import {UserProject} from "./models/UserProject";
 import {Http, URLSearchParams} from "@angular/http";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 
@@ -8,30 +8,30 @@ import {ReplaySubject} from "rxjs/ReplaySubject";
 export class UserManagerService {
 
 
-    public activeRole: ReplaySubject<UserRole> = new ReplaySubject<UserRole>(1);
+    public activeRole: ReplaySubject<UserProject> = new ReplaySubject<UserProject>(1);
 
     constructor(private http: Http) { }
 
-    getUserRoles(userId: string): Observable<UserRole[]> {
+    getUserProjects(userId: string): Observable<UserProject[]> {
         const vm = this;
         let params = new URLSearchParams();
         params.set('userId', userId);
-        return vm.http.get('api/userManager/getRoles', {search: params})
+        return vm.http.get('api/userManager/getProjects', {search: params})
             .map((response) => response.json());
     }
 
-    changeDefaultRole(userId: string, defaultRole: string, userRoleId: string): Observable<string> {
+    changeDefaultProject(userId: string, defaultProject: string, userProjectId: string): Observable<string> {
         const vm = this;
         let params = new URLSearchParams();
         params.set('userId', userId);
-        params.set('defaultRoleId', defaultRole);
-        params.set('userRoleId', userRoleId);
-        return vm.http.get('api/userManager/setDefaultRole', {search: params})
+        params.set('defaultProjectId', defaultProject);
+        params.set('userProjectId', userProjectId);
+        return vm.http.get('api/userManager/setDefaultProject', {search: params})
             .map((response) => response.text());
     }
 
 
-    changeUserRole(role: UserRole) {
+    changeUserRole(role: UserProject) {
         this.activeRole.next(role);
     }
 }
