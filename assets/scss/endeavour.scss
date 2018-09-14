@@ -1,6 +1,9 @@
 //** Globals **//
 $theme-colour: #4678A1;
-$theme-light: #729ec2;
+
+$theme-light: lighten($theme-colour, 15);
+$theme-lightest: lighten($theme-colour, 35);
+
 $background-colour: #eceeef;
 
 html {
@@ -19,6 +22,10 @@ body {
 /* Endeavour specific CSS */
 .logo-image {
   content: url('~eds-angular4/assets/img/endeavour.png');
+}
+
+.selection a {
+  color: $theme-lightest;
 }
 
 /**********************************************************************************************************************/
