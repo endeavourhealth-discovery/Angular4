@@ -3,13 +3,13 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
 	selector : 'multiSelectDropdown',
-	template : `<div ngbDropdown #myDrop="ngbDropdown" [autoClose]="false">
-	<div class="btn btn-secondary bordered-box" id="dropdownMenu3" ngbDropdownToggle style="width: 100%"><span class="pull-left">{{getCaption()}}</span><i class="fa fa-caret-down pull-right"></i></div>
-	<div class="dropdown-menu" aria-labelledby="dropdownMenu3" (mouseleave)="myDrop.close()">
-		<div class="dropdown-item" (click)="selectAll()"><i class="fa fa-check"></i> Select all</div>
-		<div class="dropdown-item" (click)="selectNone()"><i class="fa fa-times"></i> Unselect all</div>
+	template : `<div class="dropdown" id="multiselect">
+	<button class="dropdown-toggle btn-block text-left form-control" id="dropdownMenu3" data-toggle="dropdown" type="button">{{getCaption()}}<i class="fa fa-caret-down pull-right"></i></button>
+	<div class="dropdown-menu" aria-labelledby="dropdownMenu3">
+		<div class="dropdown-item" (click)="$event.stopPropagation();selectAll()"><i class="fa fa-check"></i> Select all</div>
+		<div class="dropdown-item" (click)="$event.stopPropagation();selectNone()"><i class="fa fa-times"></i> Unselect all</div>
 		<hr>
-		<div *ngFor="let item of data" class="dropdown-item" (click)="toggle(item)">
+		<div *ngFor="let item of data" class="dropdown-item" (click)="$event.stopPropagation();toggle(item)">
 			<ng-template #tooltipTemplate>
 				<div *ngIf="item.tooltip">{{item.tooltip}}</div>
 				<div *ngIf="item.tooltipKvp" style="text-align: left !important;">
@@ -22,7 +22,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 					</table>
 				</div>				
 			</ng-template>
-			<span [ngbTooltip]="tooltipTemplate"><i [ngClass]="getIcon(item)"></i> {{item[nameField]}}</span>
+			<span [ngbTooltip]="(item.tooltip || item.tooltipKvp) ? tooltipTemplate : ''"><i [ngClass]="getIcon(item)"></i> {{item[nameField]}}</span>
 		</div>
 	</div>
 </div>`,

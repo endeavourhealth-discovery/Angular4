@@ -13,8 +13,8 @@ import {NgbDateParserFormatter, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap'
 					 (ngModelChange)="setValue($event)"
 					 [minDate]="minDate"
 					 [maxDate]="maxDate">
-		<div class="input-group-addon" (click)="d.toggle()">
-			<i class="fa fa-calendar"></i>
+		<div class="input-group-append" (click)="d.toggle()">
+			<i class="fa fa-calendar input-group-text"></i>
 		</div>
 	</div>
 	`,

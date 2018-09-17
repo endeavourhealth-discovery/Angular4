@@ -22,8 +22,8 @@ import {LoggerService} from "../logger/logger.service";
 					<div class="input-group">
 						<input type="text" class="form-control" placeholder="Search term" aria-describedby="searchTerm"
 									 [(ngModel)]="searchData" (keyup)="$event.keyCode == 13 && search()" autofocus name="searchData">
-						<span class="input-group-addon" (click)="search()" style="cursor: pointer">
-						<i class="fa fa-search" id="searchTerm" aria-hidden="true"></i>
+						<span class="input-group-append" (click)="search()" style="cursor: pointer">
+						<i class="fa fa-search input-group-text" id="searchTerm" aria-hidden="true"></i>
 					</span>
 					</div>
 				</div>
@@ -124,10 +124,8 @@ import {LoggerService} from "../logger/logger.service";
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn"
-						(click)="cancel()">Cancel</button>
-		<button type="button" class="btn btn-primary"
-						(click)="ok();">OK</button>
+		<button type="button" class="btn btn-success" (click)="ok();">OK</button>
+		<button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
 	</div>
 	`
 })
