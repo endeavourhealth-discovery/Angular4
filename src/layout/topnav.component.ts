@@ -16,9 +16,10 @@ import {LoggerService} from "../logger/logger.service";
       </span>
           <div class="pull-right" style="padding: 10px;color:gray">
 
-              <div ngbDropdown class="d-inline-block">
-                  Signed in :
-                  <button class="btn btn-info btn-sm" id="roleDropdown" ngbDropdownToggle>{{currentUser.title}}
+              <div class="d-inline-block">
+								<div class="dropdown">
+									Signed in :
+                  <button class="btn dropdown-toggle btn-info btn-sm" id="roleDropdown" data-toggle="dropdown">{{currentUser.title}}
                       {{currentUser.forename}} {{currentUser.surname}}
                   </button>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="roleDropdown">
@@ -52,6 +53,7 @@ import {LoggerService} from "../logger/logger.service";
                       </div>
 
                   </div>
+								</div>
               </div>
           </div>
       </div>`,
