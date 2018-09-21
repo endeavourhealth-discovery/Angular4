@@ -3,6 +3,7 @@ import {Observable} from "rxjs/Observable";
 import {UserProject} from "./models/UserProject";
 import {Http, URLSearchParams} from "@angular/http";
 import {ReplaySubject} from "rxjs/ReplaySubject";
+import {UserProfile} from "./models/UserProfile";
 
 @Injectable()
 export class UserManagerService {
@@ -20,6 +21,14 @@ export class UserManagerService {
             .map((response) => response.json());
     }
 
+    getUserProfile(userId: string): Observable<UserProfile> {
+        const vm = this;
+        let params = new URLSearchParams();
+        params.set('userId', userId);
+        return vm.http.get('api/userManager/getUserProfile', {search: params})
+            .map((response) => response.json());
+    }
+
     changeDefaultProject(userId: string, defaultProject: string, userProjectId: string): Observable<string> {
         const vm = this;
         let params = new URLSearchParams();
@@ -31,7 +40,7 @@ export class UserManagerService {
     }
 
 
-    changeUserRole(role: UserProject) {
-        this.activeRole.next(role);
+    changeUserProject(userProject: UserProject) {
+        this.activeRole.next(userProject);
     }
 }

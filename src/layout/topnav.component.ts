@@ -5,6 +5,10 @@ import {User} from "../security/models/User";
 import {UserProject} from "../user-manager/models/UserProject";
 import {UserManagerService} from "../user-manager/user-manager.service";
 import {LoggerService} from "../logger/logger.service";
+import {UserProfile} from "../user-manager/models/UserProfile";
+import {UserOrganisationProject} from "../user-manager/models/UserOrganisationProject";
+import {Project} from "../user-manager/models/Project";
+import {ApplicationPolicyAttribute} from "../user-manager/models/ApplicationPolicyAttribute";
 
 @Component({
 	selector: 'topnav',
@@ -27,17 +31,17 @@ import {LoggerService} from "../logger/logger.service";
 								<div class="dropdown-item">
 									<div class="row align-items-center">
 										<div [ngClass]="{'active': project == selectedProject}"
-												 class="col-md-10 role-menu-description hoverable" (click)="changeRole(role)">
+												 class="col-md-10 role-menu-description hoverable" (click)="changeProject(project)">
 											<p class="mb-0"><b>{{project.projectName}}</b></p>
 											<p class="mb-0 text-uppercase">
 												<small>{{project.organisationName}}</small>
 											</p>
 										</div>
 										<div *ngIf="project.default" class="col-md-2">
-											<i class="fa fa-star" (click)="setAsDefaultRole(role)"></i>
+											<i class="fa fa-star" (click)="setAsDefaultProject(role)"></i>
 										</div>
 										<div *ngIf="!project.default" class="col-md-2">
-											<i class="fa fa-star-o" (click)="setAsDefaultRole(role)"></i>
+											<i class="fa fa-star-o" (click)="setAsDefaultProject(role)"></i>
 										</div>
 									</div>
 								</div>
@@ -50,8 +54,8 @@ import {LoggerService} from "../logger/logger.service";
 									</button>
 									<button type="button" class="btn btn-danger" (click)="logout()">Sign out</button>
 								</div>
+	
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -91,6 +95,7 @@ export class TopnavComponent implements OnInit {
 	userProjects: UserProject[] = [];
 	selectedProject: UserProject;
 	roleDetails = false;
+	userProfile : UserProfile;
 
 	constructor(private securityService:SecurityService, private menuProvider : AbstractMenuProvider,
 							private userManagerService: UserManagerService,
@@ -100,7 +105,7 @@ export class TopnavComponent implements OnInit {
 		vm.currentUser = this.securityService.getCurrentUser();
 		if (this.menuProvider.useUserManagerForRoles()) {
 			vm.roleDetails = true;
-			vm.getUserRoles();
+            vm.getUserProfile();
 		} else {
 			vm.roleDetails = false;
 		}
@@ -123,14 +128,27 @@ export class TopnavComponent implements OnInit {
 		this.securityService.logout();
 	};
 
-	getUserRoles(setdefault: boolean = true) {
+    getUserProfile(setdefault: boolean = true) {
+        const vm = this;
+        vm.userManagerService.getUserProfile(vm.currentUser.uuid)
+            .subscribe(
+                (result) => {
+                    vm.userProfile = result;
+                    console.log(result);
+                    vm.getUserProjects();
+                }
+            );
+    }
+
+	getUserProjects(setdefault: boolean = true) {
 		const vm = this;
 		vm.userManagerService.getUserProjects(vm.currentUser.uuid)
 			.subscribe(
 				(result) => {
 					vm.userProjects = result;
+					console.log(result);
 					if (setdefault) {
-						vm.findDefaultRole();
+						vm.findDefaultProject();
 					} else  {
 						vm.setCurrentlyActiveRole();
 					}
@@ -138,18 +156,18 @@ export class TopnavComponent implements OnInit {
 			);
 	}
 
-	findDefaultRole() {
+	findDefaultProject() {
 		const vm = this;
 		let fallbackRole : UserProject = null;
 		for (let role of vm.userProjects) {
 			fallbackRole = role;
 			if (role.default) {
-				vm.changeRole(role);
+				vm.changeProject(role);
 				return;
 			}
 		}
 		if (fallbackRole != null) {
-			vm.changeRole(fallbackRole);
+			vm.changeProject(fallbackRole);
 		}
 	}
 
@@ -162,19 +180,24 @@ export class TopnavComponent implements OnInit {
 		}
 	}
 
-	changeRole(role: UserProject) {
+	changeProject(userProject: UserProject) {
 		const vm = this;
-		vm.selectedProject = role;
-		vm.userManagerService.changeUserRole(role);
+		vm.selectedProject = userProject;
+		let org : UserOrganisationProject = vm.userProfile.organisationProjects.find(x => x.organisation.uuid == userProject.organisationId);
+
+		let attributes: ApplicationPolicyAttribute[] = org.projects.find(y => y.uuid == userProject.projectId).applicationPolicyAttributes;
+		let appAttributes = attributes.filter(x => x.application == this.menuProvider.getApplicationTitle());
+		userProject.applicationPolicyAttributes = appAttributes;
+		vm.userManagerService.changeUserProject(userProject);
 	}
 
-	setAsDefaultRole(role: UserProject) {
+	setAsDefaultProject(role: UserProject) {
 		const vm = this;
 		vm.userManagerService.changeDefaultProject(vm.currentUser.uuid, role.id, vm.selectedProject.id)
 			.subscribe(
 				(result) => {
 					vm.logger.success('Default project changed', null, 'Change default project');
-					vm.getUserRoles(false);
+					vm.getUserProfile(false);
 				},
 				(error) => {
 					vm.logger.error('Error changing default project', error, 'Error');
