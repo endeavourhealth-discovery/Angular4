@@ -3,6 +3,7 @@ import {AbstractMenuProvider} from "./menuProvider.service";
 import {MenuOption} from "./models/MenuOption";
 import {SecurityService} from "../security/security.service";
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {UserManagerService} from "../user-manager";
 
 @Component({
   selector: 'sidebar',
@@ -40,14 +41,26 @@ export class SidebarComponent implements OnInit {
   constructor(private menuProvider:AbstractMenuProvider,
 							private securityService:SecurityService,
 							private router: Router,
-							private activatedRoute: ActivatedRoute) {
-    this.menuOptions = menuProvider.getMenuOptions();
+							private activatedRoute: ActivatedRoute,
+			  				private userManagerService: UserManagerService) {
+
     router.events
 			.filter((e) => e instanceof NavigationEnd)
 			.subscribe((e) => 	this.navEnd(e));
+
+      if (this.menuProvider.useUserManagerForRoles()) {
+          this.userManagerService.activeUserProject.subscribe(active => {
+              this.menuOptions = menuProvider.getMenuOptions();
+          });
+      } else {
+          this.menuOptions = menuProvider.getMenuOptions();
+	  }
   }
 
   navEnd(e: any) {
+  	if (this.menuProvider.useUserManagerForRoles() && !this.securityService.userProfile) {
+  		return;
+	}
   	let newState = e.urlAfterRedirects.substring(1);
   	for (let m of this.menuOptions) {
   		if (m.state == newState)

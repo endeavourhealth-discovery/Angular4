@@ -7,9 +7,8 @@ import {UserProfile} from "./models/UserProfile";
 
 @Injectable()
 export class UserManagerService {
-
-
-    public activeRole: ReplaySubject<UserProject> = new ReplaySubject<UserProject>(1);
+    public activeUserProject: ReplaySubject<UserProject> = new ReplaySubject<UserProject>(1);
+    public currentUserProject: UserProject;
 
     constructor(private http: Http) { }
 
@@ -19,6 +18,10 @@ export class UserManagerService {
         params.set('userId', userId);
         return vm.http.get('api/userManager/getProjects', {search: params})
             .map((response) => response.json());
+    }
+
+    getCurrentUserProject() : UserProject {
+        return this.currentUserProject;
     }
 
     getUserProfile(userId: string): Observable<UserProfile> {
@@ -41,6 +44,7 @@ export class UserManagerService {
 
 
     changeUserProject(userProject: UserProject) {
-        this.activeRole.next(userProject);
+        this.activeUserProject.next(userProject);
+        this.currentUserProject = userProject;
     }
 }

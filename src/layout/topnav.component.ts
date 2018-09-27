@@ -7,7 +7,6 @@ import {UserManagerService} from "../user-manager/user-manager.service";
 import {LoggerService} from "../logger/logger.service";
 import {UserProfile} from "../user-manager/models/UserProfile";
 import {UserOrganisationProject} from "../user-manager/models/UserOrganisationProject";
-import {Project} from "../user-manager/models/Project";
 import {ApplicationPolicyAttribute} from "../user-manager/models/ApplicationPolicyAttribute";
 
 @Component({
@@ -107,19 +106,20 @@ export class TopnavComponent implements OnInit {
                 (result) => {
                     vm.userProfile = result;
                     console.log(result);
+                    vm.securityService.setCurrentUserProfile(result);
                     vm.getUserProjects();
                 }
             );
     }
 
-	getUserProjects(setdefault: boolean = true) {
+	getUserProjects(setDefault: boolean = true) {
 		const vm = this;
 		vm.userManagerService.getUserProjects(vm.currentUser.uuid)
 			.subscribe(
 				(result) => {
 					vm.userProjects = result;
 					console.log(result);
-					if (setdefault) {
+					if (setDefault) {
 						vm.findDefaultProject();
 					} else  {
 						vm.setCurrentlyActiveRole();

@@ -3,18 +3,45 @@ import {User} from "./models/User";
 import {KeycloakService} from "../keycloak/keycloak.service";
 import {OrganisationGroup} from "./models/OrganisationGroup";
 import {Access} from "./models/Access";
+import {UserManagerService} from "../user-manager/user-manager.service";
+import {UserProfile} from "../user-manager/models/UserProfile";
+import {ApplicationPolicyAttribute} from "../user-manager/models/ApplicationPolicyAttribute";
+import {UserOrganisationProject} from "../user-manager/models/UserOrganisationProject";
+import {UserProject} from "../user-manager/models/UserProject";
+import {AbstractMenuProvider} from "../layout/menuProvider.service";
 
 @Injectable()
 export class SecurityService {
   currentUser:User;
+  userProfile : UserProfile;
+  activeUserProject: UserProject;
 
-  constructor(private keycloakService : KeycloakService) { }
+
+
+  constructor(private menuProvider:AbstractMenuProvider,
+              private keycloakService : KeycloakService,
+              private userManagerService: UserManagerService) {
+
+      if (this.menuProvider.useUserManagerForRoles()) {
+          this.userManagerService.activeUserProject.subscribe(active => {
+              this.activeUserProject = active;
+          });
+      }
+  }
 
   getCurrentUser() : User {
     if(!this.currentUser) {
       this.currentUser = this.parseUser();
     }
     return this.currentUser;
+  }
+
+  setCurrentUserProfile(userProfile: UserProfile) {
+      this.userProfile = userProfile;
+  }
+
+  getCurrentUserProfile() : UserProfile {
+      return this.userProfile;
   }
 
   logout() {
@@ -26,19 +53,55 @@ export class SecurityService {
   }
 
 	hasPermission(client, role : string) : boolean {
+
+        if (this.menuProvider.useUserManagerForRoles()) {
+            if (this.userProfile) {
+                return this.hasPermissionUserManager(role);
+            }
+        }
 		let clientAccess: Access = this.getCurrentUser().clientAccess[client];
+
 		if (!clientAccess)
 			return false;
 
 		if (role == null || role == '')
 			return true;
 
-
 		if (clientAccess && clientAccess.roles)
 			return clientAccess.roles.indexOf(role) > -1;
 
 		return false;
 	}
+
+    hasPermissionUserManager(role : string) : boolean {
+
+        const vm = this;
+        let application = vm.menuProvider.getApplicationTitle();
+        console.log(vm.activeUserProject);
+
+        if (role == null || role == '')
+            return true;
+
+        let org : UserOrganisationProject = vm.userProfile.organisationProjects.find(x => x.organisation.uuid == vm.activeUserProject.organisationId);
+
+        if (org == null) {
+            return false;
+        }
+
+        let attributes: ApplicationPolicyAttribute[] = org.projects.find(y => y.uuid == vm.activeUserProject.projectId).applicationPolicyAttributes;
+
+        if (attributes == null) {
+            return false;
+        }
+
+        let appAttributes = attributes.filter(x => x.application == application);
+        if (appAttributes == null) {
+            return false;
+        }
+
+        return appAttributes.find(x => x.applicationAccessProfileName == role) != null;
+
+    }
 
 
 	private parseUser() : User {
