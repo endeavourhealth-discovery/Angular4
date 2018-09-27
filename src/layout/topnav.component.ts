@@ -37,10 +37,10 @@ import {ApplicationPolicyAttribute} from "../user-manager/models/ApplicationPoli
 											</p>
 										</div>
 										<div *ngIf="project.default" class="col-md-2">
-											<i class="fa fa-star" (click)="setAsDefaultProject(role)"></i>
+											<i class="fa fa-star" (click)="setAsDefaultProject(project)"></i>
 										</div>
 										<div *ngIf="!project.default" class="col-md-2">
-											<i class="fa fa-star-o" (click)="setAsDefaultProject(role)"></i>
+											<i class="fa fa-star-o" (click)="setAsDefaultProject(project)"></i>
 										</div>
 									</div>
 								</div>
