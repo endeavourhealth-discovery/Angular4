@@ -8,6 +8,8 @@ import {SecurityService} from "../security/security.service";
 import {StopComponent} from "./stop.component";
 import {UserProject} from "../user-manager/models/UserProject";
 import {UserManagerService} from "../user-manager";
+import {PleaseWaitComponent} from "./please-wait.component";
+import {UserManagerNotificationService} from "../user-manager/user-manager-notification.service";
 
 @Injectable()
 export class MenuAuth implements CanActivate {
@@ -18,10 +20,11 @@ export class MenuAuth implements CanActivate {
 		private router : Router,
 		private menuProvider : AbstractMenuProvider,
 		private security : SecurityService,
-        private userManagerService: UserManagerService) {
+        private userManagerService: UserManagerService,
+		private userManagerNotificationService: UserManagerNotificationService) {
 
 	    if (this.menuProvider.useUserManagerForRoles()) {
-            this.userManagerService.activeUserProject.subscribe(active => {
+            this.userManagerNotificationService.activeUserProject.subscribe(active => {
                 this.currentUserProject = active;
                 this.checkAccess();
             });
@@ -33,7 +36,7 @@ export class MenuAuth implements CanActivate {
 
 		let url = vm.router.routerState.snapshot.url;
 
-		if (url.slice(1) == 'stop' && vm.previousRoute != '') {
+		if ((url.slice(1) == 'stop' || url.slice(1) == 'wait') && vm.previousRoute != '') {
 			// we got redirected to the stop page but now the role has changed so try the original request again
 			url = vm.previousRoute;
 		}
@@ -81,7 +84,11 @@ export class MenuAuth implements CanActivate {
 
 		if (!canActivate) {
             vm.previousRoute = state.url;
-            this.router.navigate(['/stop']);
+            if (userManager && !this.security.userProfile) {
+                this.router.navigate(['/wait']);
+			} else {
+                this.router.navigate(['/stop']);
+            }
         }
 
 		return canActivate;
@@ -93,6 +100,7 @@ export class MenuAuth implements CanActivate {
 		}
 
 		appRoutes.push({path: 'stop', component : StopComponent });
+        appRoutes.push({path: 'wait', component : PleaseWaitComponent });
 
 		return appRoutes;
 	}

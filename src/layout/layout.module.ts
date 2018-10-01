@@ -10,6 +10,7 @@ import {SecurityModule} from "../security/security.module";
 import {UserManagerModule} from "../user-manager/user-manager.module";
 import {MenuAuth} from "./menuAuth.service";
 import {StopComponent} from "./stop.component";
+import {PleaseWaitComponent} from "./please-wait.component";
 
 
 @NgModule({
@@ -26,12 +27,14 @@ import {StopComponent} from "./stop.component";
     SidebarComponent,
     TopnavComponent,
 		StopComponent,
+      PleaseWaitComponent
   ],
 	providers : [
 		MenuAuth
 	],
 	entryComponents : [
-		StopComponent
+		StopComponent,
+        PleaseWaitComponent
 	]
 })
 export class LayoutModule {}

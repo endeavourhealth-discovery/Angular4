@@ -4,6 +4,7 @@ import {MenuOption} from "./models/MenuOption";
 import {SecurityService} from "../security/security.service";
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {UserManagerService} from "../user-manager";
+import {UserManagerNotificationService} from "../user-manager/user-manager-notification.service";
 
 @Component({
   selector: 'sidebar',
@@ -42,14 +43,15 @@ export class SidebarComponent implements OnInit {
 							private securityService:SecurityService,
 							private router: Router,
 							private activatedRoute: ActivatedRoute,
-			  				private userManagerService: UserManagerService) {
+			  				private userManagerService: UserManagerService,
+			  				private userManagerNotificationService: UserManagerNotificationService) {
 
     router.events
 			.filter((e) => e instanceof NavigationEnd)
 			.subscribe((e) => 	this.navEnd(e));
 
       if (this.menuProvider.useUserManagerForRoles()) {
-          this.userManagerService.activeUserProject.subscribe(active => {
+          this.userManagerNotificationService.activeUserProject.subscribe(active => {
               this.menuOptions = menuProvider.getMenuOptions();
           });
       } else {

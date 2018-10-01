@@ -8,6 +8,7 @@ import {LoggerService} from "../logger/logger.service";
 import {UserProfile} from "../user-manager/models/UserProfile";
 import {UserOrganisationProject} from "../user-manager/models/UserOrganisationProject";
 import {ApplicationPolicyAttribute} from "../user-manager/models/ApplicationPolicyAttribute";
+import {UserManagerNotificationService} from "../user-manager/user-manager-notification.service";
 
 @Component({
 	selector: 'topnav',
@@ -70,6 +71,7 @@ export class TopnavComponent implements OnInit {
 
 	constructor(private securityService:SecurityService, private menuProvider : AbstractMenuProvider,
 							private userManagerService: UserManagerService,
+							private userManagerNotificationService: UserManagerNotificationService,
 							protected logger : LoggerService) {
 		let vm = this;
 
@@ -160,7 +162,7 @@ export class TopnavComponent implements OnInit {
 		let attributes: ApplicationPolicyAttribute[] = org.projects.find(y => y.uuid == userProject.projectId).applicationPolicyAttributes;
 		let appAttributes = attributes.filter(x => x.application == this.menuProvider.getApplicationTitle());
 		userProject.applicationPolicyAttributes = appAttributes;
-		vm.userManagerService.changeUserProject(userProject);
+		vm.userManagerNotificationService.changeUserProject(userProject);
 	}
 
 	setAsDefaultProject(role: UserProject) {

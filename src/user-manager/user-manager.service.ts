@@ -2,13 +2,10 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {UserProject} from "./models/UserProject";
 import {Http, URLSearchParams} from "@angular/http";
-import {ReplaySubject} from "rxjs/ReplaySubject";
 import {UserProfile} from "./models/UserProfile";
 
 @Injectable()
 export class UserManagerService {
-    public activeUserProject: ReplaySubject<UserProject> = new ReplaySubject<UserProject>(1);
-    public currentUserProject: UserProject;
 
     constructor(private http: Http) { }
 
@@ -18,10 +15,6 @@ export class UserManagerService {
         params.set('userId', userId);
         return vm.http.get('api/userManager/getProjects', {search: params})
             .map((response) => response.json());
-    }
-
-    getCurrentUserProject() : UserProject {
-        return this.currentUserProject;
     }
 
     getUserProfile(userId: string): Observable<UserProfile> {
@@ -40,11 +33,5 @@ export class UserManagerService {
         params.set('userProjectId', userProjectId);
         return vm.http.get('api/userManager/setDefaultProject', {search: params})
             .map((response) => response.text());
-    }
-
-
-    changeUserProject(userProject: UserProject) {
-        this.activeUserProject.next(userProject);
-        this.currentUserProject = userProject;
     }
 }

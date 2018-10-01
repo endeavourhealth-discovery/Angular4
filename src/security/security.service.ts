@@ -9,6 +9,7 @@ import {ApplicationPolicyAttribute} from "../user-manager/models/ApplicationPoli
 import {UserOrganisationProject} from "../user-manager/models/UserOrganisationProject";
 import {UserProject} from "../user-manager/models/UserProject";
 import {AbstractMenuProvider} from "../layout/menuProvider.service";
+import {UserManagerNotificationService} from "../user-manager/user-manager-notification.service";
 
 @Injectable()
 export class SecurityService {
@@ -20,10 +21,11 @@ export class SecurityService {
 
   constructor(private menuProvider:AbstractMenuProvider,
               private keycloakService : KeycloakService,
-              private userManagerService: UserManagerService) {
+              private userManagerService: UserManagerService,
+              private userManagerNotificationService: UserManagerNotificationService) {
 
       if (this.menuProvider.useUserManagerForRoles()) {
-          this.userManagerService.activeUserProject.subscribe(active => {
+          this.userManagerNotificationService.activeUserProject.subscribe(active => {
               this.activeUserProject = active;
           });
       }
@@ -77,7 +79,6 @@ export class SecurityService {
 
         const vm = this;
         let application = vm.menuProvider.getApplicationTitle();
-        console.log(vm.activeUserProject);
 
         if (role == null || role == '')
             return true;
