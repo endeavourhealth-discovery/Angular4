@@ -146,4 +146,8 @@ $modal-sm:                    30%;
   }
 }
 
-
+.dropdown-scrollable {
+  height: auto;
+  max-height: 400px;
+  overflow-x: hidden;
+}

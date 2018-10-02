@@ -5,7 +5,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 	selector : 'multiSelectDropdown',
 	template : `<div class="dropdown" id="multiselect">
 	<button class="dropdown-toggle btn-block text-left form-control" id="dropdownMenu3" data-toggle="dropdown" type="button">{{getCaption()}}<i class="fa fa-caret-down pull-right"></i></button>
-	<div class="dropdown-menu" aria-labelledby="dropdownMenu3">
+	<div class="dropdown-menu dropdown-scrollable" aria-labelledby="dropdownMenu3">
 		<div class="dropdown-item" (click)="$event.stopPropagation();selectAll()"><i class="fa fa-check"></i> Select all</div>
 		<div class="dropdown-item" (click)="$event.stopPropagation();selectNone()"><i class="fa fa-times"></i> Unselect all</div>
 		<hr>
