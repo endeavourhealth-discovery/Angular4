@@ -7,27 +7,21 @@ import {Router} from "@angular/router";
     selector : 'entity-viewer-ssp',
     template : `
         <div class="row" *ngIf="!noSearch">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <span class="input-group-addon" id="searchOrg">Search</span>
-                    <input type="text" class="form-control" placeholder="" [(ngModel)]="filterText" [value]="filterText" name="filterText" (keyup.enter)="findEntities()">
-                </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Search</label>
+                <input type="text" class="form-control" placeholder="" [(ngModel)]="filterText" [value]="filterText" name="filterText" (keyup.enter)="findEntities()">
             </div>
-            <div class="col-md-3">
-                <div class="input-group">
-                    <span class="input-group-addon" id="orderOrg">Order</span>
-                    <select #selectedOrder class="form-control" [(ngModel)]="order" name="order" (change)="orderChange()">
-                        <option *ngFor="let o of orderList" [ngValue]="o">{{o.name}}</option>
-                    </select>
-                </div>
+            <div class="form-group col-md-3">
+                <label class="control-label" id="orderOrg">Order</label>
+                <select #selectedOrder class="form-control" [(ngModel)]="order" name="order" (change)="orderChange()">
+                    <option *ngFor="let o of orderList" [ngValue]="o">{{o.name}}</option>
+                </select>
             </div>
-            <div class="col-md-3">
-                <div class="input-group">
-                    <span class="input-group-addon" id="pageSize">Items per page</span>
-                    <select #selectedPageSize class="form-control" [(ngModel)]="pageSize" name="pageSize" (change)="pageSizeChange()">
-                        <option *ngFor="let ps of pageSizeList" [ngValue]="ps">{{ps}}</option>
-                    </select>
-                </div>
+            <div class="form-group col-md-3">
+                <label class="control-label" id="pageSize">Items per page</label>
+                <select #selectedPageSize class="form-control" [(ngModel)]="pageSize" name="pageSize" (change)="pageSizeChange()">
+                    <option *ngFor="let ps of pageSizeList" [ngValue]="ps">{{ps}}</option>
+                </select>
             </div>
         </div>
         <br>

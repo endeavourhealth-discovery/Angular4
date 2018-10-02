@@ -109,6 +109,7 @@ export class TopnavComponent implements OnInit {
                     vm.userProfile = result;
                     console.log(result);
                     vm.securityService.setCurrentUserProfile(result);
+                    vm.userManagerNotificationService.setUserRegion(vm.userProfile.region);
                     vm.getUserProjects();
                 }
             );
