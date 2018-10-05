@@ -11,6 +11,7 @@ import {UserManagerModule} from "../user-manager/user-manager.module";
 import {MenuAuth} from "./menuAuth.service";
 import {StopComponent} from "./stop.component";
 import {PleaseWaitComponent} from "./please-wait.component";
+import {ControlsModule} from "../controls";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {PleaseWaitComponent} from "./please-wait.component";
     SecurityModule,
     UserManagerModule,
     RouterModule,
-    NgbModule
+    NgbModule,
+    ControlsModule
   ],
   declarations : [
     LayoutComponent,
