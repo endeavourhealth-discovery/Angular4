@@ -5,4 +5,5 @@ export class GraphNode {
   data: any;
   x: number = 0;
   y: number = 0;
+  tooltip: string;
 }

@@ -109,9 +109,9 @@ export class NodeGraphComponent implements AfterViewInit {
       this.colors(index);
   }
 
-  addNodeData(id: number, label: string, group: number, data: any) {
+  addNodeData(id: number, label: string, group: number, data: any, tooltip: string = null) {
     if (this.nodeData.findIndex(i => i.id === id) === -1)
-      this.nodeData.push({id: id, label: label, group: group, data: data, x: 0, y: 0});
+      this.nodeData.push({id: id, label: label, group: group, data: data, x: 0, y: 0, tooltip: tooltip});
   }
 
   addEdgeData(source: number, target: number, label: string, data: any) {
@@ -123,65 +123,73 @@ export class NodeGraphComponent implements AfterViewInit {
   }
 
   start() {
-    this.edges = this.edges.data(this.force.links());
-    this.edges.enter()
-      .append('line')
-      .attr('id', (d, i) => this.instanceId + '_edge' + i)
-      .attr('marker-end', 'url(#arrowhead)')
-      .attr('overflow', 'invisible')
-      .style('pointer-events', 'none')
-      .style('stroke', '#ccc');
-    this.edges.exit().remove();
+      this.edges = this.edges.data(this.force.links());
+      this.edges.enter()
+          .append('line')
+          .attr('id', (d, i) => this.instanceId + '_edge' + i)
+          .attr('marker-end', 'url(#arrowhead)')
+          .attr('overflow', 'invisible')
+          .style('pointer-events', 'none')
+          .style('stroke', '#ccc');
+      this.edges.exit().remove();
 
-    this.nodes = this.nodes.data(this.force.nodes());
-    this.nodes.enter()
-      .append('circle')
-      .attr({'r': this.nodeSize})
-      .style('fill', (d: any) => this.colors(d.group))
-      .call(this.force.drag)
-      .on("click", (node) => this.nodeClick.emit(node))
-      .on("dblclick", (node) => this.nodeDblClick.emit(node));
-    this.nodes.exit().remove();
+      this.nodes = this.nodes.data(this.force.nodes());
+      this.nodes.enter()
+          .append('circle')
+          .attr({'r': this.nodeSize})
+          .style('fill', (d: any) => this.colors(d.group))
+          .call(this.force.drag)
+          .on("click", (node) => this.nodeClick.emit(node))
+          .on("dblclick", (node) => this.nodeDblClick.emit(node))
+          .append('title')
+          .html((d) => d.tooltip);
+      this.nodes.exit().remove();
 
-    this.nodelabels = this.nodelabels.data(this.force.nodes());
-    this.nodelabels.enter()
-      .append('text')
-      .attr({'x': (d: any) => d.x + this.nodeSize,
-        'y': (d: any) => d.y - 4,
-        'class': 'nodelabel',
-        'stroke': 'black'})
-      .text((d: any) => d.label);
-    this.nodelabels.exit().remove();
+      this.nodelabels = this.nodelabels.data(this.force.nodes());
+      this.nodelabels.enter()
+          .append('text')
+          .attr({
+              'x': (d: any) => d.x + this.nodeSize,
+              'y': (d: any) => d.y - 4,
+              'class': 'nodelabel',
+              'stroke': 'black'
+          })
+          .text((d: any) => d.label);
+      this.nodelabels.exit().remove();
 
-    this.edgepaths = this.edgepaths.data(this.force.links());
-    this.edgepaths.enter()
-      .append('path')
-      .attr({'d': (d: any) => 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y,
-        'class': 'edgepath',
-        'fill-opacity': 0,
-        'stroke-opacity': 0,
-        'fill': 'blue',
-        'stroke': 'red',
-        'id': (d, i) => this.instanceId + '_edgepath' + i })
-       .style('pointer-events', 'none');
-    this.edgepaths.exit().remove();
+      this.edgepaths = this.edgepaths.data(this.force.links());
+      this.edgepaths.enter()
+          .append('path')
+          .attr({
+              'd': (d: any) => 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y,
+              'class': 'edgepath',
+              'fill-opacity': 0,
+              'stroke-opacity': 0,
+              'fill': 'blue',
+              'stroke': 'red',
+              'id': (d, i) => this.instanceId + '_edgepath' + i
+          })
+          .style('pointer-events', 'none');
+      this.edgepaths.exit().remove();
 
-    this.edgelabels = this.edgelabels.data(this.force.links());
-    this.edgelabels.enter()
-      .append('text')
-      .attr({'class': 'edgelabel',
-        'id': (d, i) => this.instanceId + '_edgelabel' + i,
-        'dx': (d,i) => (this.linkDistance * 0.5) - (d.label.length * 2.5),
-        'dy': 0,
-        'font-size': 10,
-        'fill': '#aaa'})
-      .on("click", (link) => this.linkClicked(link))
-      .append('textPath')
-      .attr('xlink:href', (d, i) => '#' + this.instanceId + '_edgepath' + i)
-      .text((d: any, i) => d.label);
-    this.edgelabels.exit().remove();
+      this.edgelabels = this.edgelabels.data(this.force.links());
+      this.edgelabels.enter()
+          .append('text')
+          .attr({
+              'class': 'edgelabel',
+              'id': (d, i) => this.instanceId + '_edgelabel' + i,
+              'dx': (d, i) => (this.linkDistance * 0.5) - (d.label.length * 2.5),
+              'dy': 0,
+              'font-size': 10,
+              'fill': '#aaa'
+          })
+          .on("click", (link) => this.linkClicked(link))
+          .append('textPath')
+          .attr('xlink:href', (d, i) => '#' + this.instanceId + '_edgepath' + i)
+          .text((d: any, i) => d.label);
+      this.edgelabels.exit().remove();
 
-    this.force.start();
+      this.force.start();
   }
 
   tick(nodes, edges, nodelabels, edgepaths, edgelabels) {
