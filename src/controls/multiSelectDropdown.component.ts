@@ -47,6 +47,9 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 export class MultiSelectDropdownComponent implements ControlValueAccessor {
 	@Input() data : any[];
 	@Input() nameField: string = 'name';
+    @Input() noneText: string = 'Select';
+    @Input() allText: string = 'All';
+    @Input() itemText: string = 'Item';
 
 	private selectedItems : any[] = [];
 	private changed = [];
@@ -70,13 +73,13 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
 
 	getCaption() {
 		if (!this.selectedItems || this.selectedItems.length == 0)
-			return 'Select';
+			return this.noneText;
 		else if (this.selectedItems.length == this.data.length)
-			return 'All';
+			return this.allText;
 		else if (this.selectedItems.length == 1)
-			return '1 Item';
+			return '1 ' + this.itemText;
 		else
-			return this.selectedItems.length + ' Items';
+			return this.selectedItems.length + ' ' + this.itemText + 's';
 	}
 
 	getIcon(item : any) {

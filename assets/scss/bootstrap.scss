@@ -62,6 +62,9 @@ $tooltip-font-size:           $font-size-xs;
 $modal-lg:                    80%;
 $modal-md:                    50%;
 $modal-sm:                    30%;
+$modal-content-bg:          $gray-lightest;
+
+$enable-caret:              false;    // Disable drop-down caret
 
 //** Bootstrap styling proper **//
 
@@ -103,6 +106,15 @@ $modal-sm:                    30%;
   border-style: solid;
   border-color: $card-border-color;
   margin-left: -1px;
+}
+
+.modal-header {
+  background: $theme-light;
+  color: $white;
+}
+
+.modal-footer {
+  background: $white;
 }
 
 .table-hover {
