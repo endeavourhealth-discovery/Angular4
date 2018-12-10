@@ -41,7 +41,7 @@ export class KeycloakHttp extends Http {
         else {
             let params = new URLSearchParams();
             params.append('api', api);
-            return super.get('/api/config/api', {search: params})
+            return super.get('api/config/api', {search: params})
                 .map(result => {
                     this.apis[api] = result.text();
                     return result.text() + url;
