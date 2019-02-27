@@ -24,8 +24,8 @@ import {Router} from "@angular/router";
                 </select>
             </div>
             <div *ngIf="showEditButton" [ngClass]="{'offset-11':items.length <= 12}" class="form-group col-md-1">
-                <label class="control-label" id="pageSize"> </label>
-                <button type="button" class="btn btn-sm btn-success pull-right" (click)="showPicker()">Edit</button>
+                <label class="control-label" id="pageSize">&nbsp;</label>
+                <button type="button" class="form-control btn btn-sm btn-success pull-right" (click)="showPicker()">Edit</button>
             </div>
         </div>
         <br>
