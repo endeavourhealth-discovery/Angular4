@@ -7,21 +7,25 @@ import {Router} from "@angular/router";
     selector : 'entity-viewer-ssp',
     template : `
         <div class="row" *ngIf="!noSearch">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6" *ngIf="items?.length > 12">
                 <label class="control-label">Search</label>
                 <input type="text" class="form-control" placeholder="" [(ngModel)]="filterText" [value]="filterText" name="filterText" (keyup.enter)="findEntities()">
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-3" *ngIf="items?.length > 12">
                 <label class="control-label" id="orderOrg">Order</label>
                 <select #selectedOrder class="form-control" [(ngModel)]="order" name="order" (change)="orderChange()">
                     <option *ngFor="let o of orderList" [ngValue]="o">{{o.name}}</option>
                 </select>
             </div>
-            <div class="form-group col-md-3">
+            <div *ngIf="items?.length > 12" [ngClass]="{'form-group col-md-2':showEditButton, 'form-group col-md-3':!showEditButton}">
                 <label class="control-label" id="pageSize">Items per page</label>
                 <select #selectedPageSize class="form-control" [(ngModel)]="pageSize" name="pageSize" (change)="pageSizeChange()">
                     <option *ngFor="let ps of pageSizeList" [ngValue]="ps">{{ps}}</option>
                 </select>
+            </div>
+            <div *ngIf="showEditButton" [ngClass]="{'offset-11':items.length <= 12}" class="form-group col-md-1">
+                <label class="control-label" id="pageSize"> </label>
+                <button type="button" class="btn btn-sm btn-success pull-right" (click)="showPicker()">Edit</button>
             </div>
         </div>
         <br>
@@ -37,7 +41,8 @@ import {Router} from "@angular/router";
                 <div [ngClass]="displayClass" class="h-100">
                     <span><b>{{item[primary]}}</b><br><p *ngIf="secondary">{{(item[secondary]?.length > 200) ? (item[secondary] | slice:0:200)+"...":item[secondary]}}<p></span>
                     <i *ngIf="allowDelete" (click)="delete(item)" class="fa fa-trash pull-left delete-endeavour-button" aria-hidden="true" style="color:red"></i>
-                    <i (click)="viewItemDetails(item)" class="fa fa-info-circle pull-right info-endeavour-button" aria-hidden="true" style="color:mediumblue"></i>
+                    <i *ngIf="!allowEdit" (click)="viewItemDetails(item)" class="fa fa-info-circle pull-right info-endeavour-button" aria-hidden="true" style="color:mediumblue"></i>
+                    <i *ngIf="allowEdit" (click)="viewItemDetails(item)" class="fa fa-pencil pull-right info-endeavour-button" aria-hidden="true" style="color:green"></i>
                 </div>
             </div>
         </div>
@@ -64,8 +69,10 @@ export class EntityViewerServerSidePagination {
     @Input() pageNumber : number = 1;
     @Input() maxPageSize : number = 48;
     @Input() allowDelete : boolean = false;
+    @Input() allowEdit : boolean = false;
     @Input() noLink : boolean = false;
     @Input() noSearch: boolean = false;
+    @Input() showEditButton: boolean = true;
 
     @Output() deleted: EventEmitter<string> = new EventEmitter<string>();
     @Output() onPageChange: EventEmitter<number> = new EventEmitter<number>();
@@ -73,6 +80,7 @@ export class EntityViewerServerSidePagination {
     @Output() search: EventEmitter<string> = new EventEmitter<string>();
     @Output() onOrderChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() clicked: EventEmitter<string> = new EventEmitter<string>();
+    @Output() onshowPicker: EventEmitter<string> = new EventEmitter<string>();
 
     delete(item : any) {
         this.deleted.next(item);
@@ -80,6 +88,10 @@ export class EntityViewerServerSidePagination {
 
     clickOnItem(item: any) {
         this.clicked.next(item);
+    }
+
+    showPicker() {
+        this.onshowPicker.next();
     }
 
     pageChanged($event) {
