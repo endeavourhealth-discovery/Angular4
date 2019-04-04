@@ -93,7 +93,7 @@ export class TopnavComponent implements OnInit {
 
 	navigateUserAccount() {
 		var url = window.location.protocol + "//" + window.location.host;
-		url = url + "/new-user-manager/#/userView";
+		url = url + "/user-manager/#/userView";
 		window.open(url, '_blank');
 	}
 
