@@ -159,7 +159,6 @@ export class EntityViewerServerSidePagination {
 
     editItem(item : any) {
         var vm = this;
-        console.log(vm.model);
         switch (vm.model.toLowerCase()) {
             case "organisation": {
                 this.router.navigate(['/organisation', item.uuid, 'edit']);
@@ -201,7 +200,6 @@ export class EntityViewerServerSidePagination {
     }
 
     orderChange(): void {
-        console.log(this.order);
         this.onOrderChange.next(this.order);
     }
 

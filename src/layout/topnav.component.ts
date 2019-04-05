@@ -107,7 +107,6 @@ export class TopnavComponent implements OnInit {
             .subscribe(
                 (result) => {
                     vm.userProfile = result;
-                    console.log(result);
                     vm.securityService.setCurrentUserProfile(result);
                     vm.userManagerNotificationService.setUserRegion(vm.userProfile.region);
                     vm.getUserProjects();
@@ -121,7 +120,6 @@ export class TopnavComponent implements OnInit {
 			.subscribe(
 				(result) => {
 					vm.userProjects = result;
-					console.log(result);
 					if (setDefault) {
 						vm.findDefaultProject();
 					} else  {
