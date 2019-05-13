@@ -46,6 +46,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 })
 export class MultiSelectDropdownComponent implements ControlValueAccessor {
 	@Input() data : any[];
+	@Input() idField: string = 'id';
 	@Input() nameField: string = 'name';
     @Input() noneText: string = 'Select';
     @Input() allText: string = 'All';
@@ -83,7 +84,7 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
 	}
 
 	getIcon(item : any) {
-		if (this.selectedItems.indexOf(item.id) == -1)
+		if (this.selectedItems.indexOf(item[this.idField]) == -1)
 			return 'fa fa-blank';
 
 		return 'fa fa-check';
@@ -92,7 +93,7 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
 	selectAll() {
 		this.selectedItems = [];
 		for (let item of this.data)
-			this.selectedItems.push(item.id);
+			this.selectedItems.push(item[this.idField]);
 
 		this.changed.forEach(f => f(this.selectedItems));
 	}
@@ -103,9 +104,9 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
 	}
 
 	toggle(item : any) {
-		var index = this.selectedItems.indexOf(item.id, 0);
+		var index = this.selectedItems.indexOf(item[this.idField], 0);
 		if (index == -1)
-			this.selectedItems.push(item.id);
+			this.selectedItems.push(item[this.idField]);
 		else
 			this.selectedItems.splice(index, 1);
 

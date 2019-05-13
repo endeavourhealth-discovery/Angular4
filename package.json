@@ -1,9 +1,10 @@
 {
   "name": "eds-angular4",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "devDependencies": {
+    "@types/lodash": "4.14.118",
     "typescript": "2.1.4"
   },
   "dependencies": {
