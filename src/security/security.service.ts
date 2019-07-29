@@ -80,6 +80,11 @@ export class SecurityService {
         const vm = this;
         let application = vm.menuProvider.getApplicationTitle();
 
+        // if we don't have a profile, something went wrong so direct user to stop page
+        if (!vm.userProfile) {
+            return false;
+        }
+
         if (role == null || role == '')
             return true;
 

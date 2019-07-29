@@ -110,7 +110,10 @@ export class TopnavComponent implements OnInit {
                     vm.securityService.setCurrentUserProfile(result);
                     vm.userManagerNotificationService.setUserRegion(vm.userProfile.region);
                     vm.getUserProjects();
-                }
+                }, (error => {
+                	// an error occurred getting the profile so trigger even to throw user to the stop page
+                	vm.userManagerNotificationService.changeUserProject(null);
+				})
             );
     }
 
