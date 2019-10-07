@@ -40,14 +40,14 @@ import {Router} from "@angular/router";
             <div *ngFor="let item of items" class="col-md-3">
                 <div [ngClass]="displayClass" class="h-100">
                     <span><b>{{item[primary]}}</b><br><p *ngIf="secondary">{{(item[secondary]?.length > 200) ? (item[secondary] | slice:0:200)+"...":item[secondary]}}<p></span>
-                    <i *ngIf="allowDelete" (click)="delete(item)" class="fa fa-trash pull-left delete-endeavour-button" aria-hidden="true" style="color:red"></i>
-                    <i *ngIf="!allowEdit" (click)="viewItemDetails(item)" class="fa fa-info-circle pull-right info-endeavour-button" aria-hidden="true" style="color:mediumblue"></i>
-                    <i *ngIf="allowEdit" (click)="viewItemDetails(item)" class="fa fa-pencil pull-right info-endeavour-button" aria-hidden="true" style="color:green"></i>
+                    <i *ngIf="allowDelete" (click)="delete(item)" class="fa fa-trash pull-left delete-endeavour-button" aria-hidden="true" style="color:red; cursor: pointer;"></i>
+                    <i *ngIf="!allowEdit" (click)="viewItemDetails(item)" class="fa fa-info-circle pull-right info-endeavour-button" aria-hidden="true" style="color:mediumblue; cursor: pointer;"></i>
+                    <i *ngIf="allowEdit" (click)="viewItemDetails(item)" class="fa fa-pencil pull-right info-endeavour-button" aria-hidden="true" style="color:green; cursor: pointer;"></i>
                 </div>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" *ngIf="totalItems > pageSize">
             <div class="col-md-12">
                 <ngb-pagination [collectionSize]="totalItems" [(page)]="pageNumber" [maxSize]="20" [pageSize]="pageSize" [boundaryLinks]="true" (pageChange)="pageChanged($event)"></ngb-pagination>
             </div>
