@@ -39,8 +39,9 @@ import {Router} from "@angular/router";
                 <div [ngClass]="displayClass" class="h-100">
                     <span><b>{{item[primary]}}</b><br><p *ngIf="secondary">{{(item[secondary]?.length > 200) ? (item[secondary] | slice:0:200)+"...":item[secondary]}}<p></span>
                     <i *ngIf="allowDelete" (click)="delete(item)" class="fa fa-trash pull-left delete-endeavour-button" aria-hidden="true" style="color:red; cursor: pointer;"></i>
-                    <i *ngIf="!allowEdit" (click)="viewItemDetails(item)" class="fa fa-info-circle pull-right info-endeavour-button" aria-hidden="true" style="color:mediumblue; cursor: pointer;"></i>
-                    <i *ngIf="allowEdit" (click)="viewItemDetails(item)" class="fa fa-pencil pull-right info-endeavour-button" aria-hidden="true" style="color:green; cursor: pointer;"></i>
+                    <i *ngIf="typeDescription == 'document'" (click)="downloadDocument(item)" class="fa fa-download pull-right info-endeavour-button" aria-hidden="true" style="color:mediumblue; cursor: pointer;"></i>
+                    <i *ngIf="!allowEdit && !(typeDescription == 'document')" (click)="viewItemDetails(item)" class="fa fa-info-circle pull-right info-endeavour-button" aria-hidden="true" style="color:mediumblue; cursor: pointer;"></i>
+                    <i *ngIf="allowEdit && !(typeDescription == 'document')" (click)="viewItemDetails(item)" class="fa fa-pencil pull-right info-endeavour-button" aria-hidden="true" style="color:green; cursor: pointer;"></i>
                 </div>
             </div>
         </div>
@@ -227,5 +228,13 @@ export class EntityViewer {
         }
 
         vm.editItem(item);
+    }
+
+    downloadDocument(item: any) {
+        var a = document.createElement("a");
+        a.href = item.fileData;
+        a.download = item.filename;
+        // start download
+        a.click();
     }
 }
