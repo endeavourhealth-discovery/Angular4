@@ -60,7 +60,7 @@ export class KeycloakHttp extends Http {
                         authOptions = new RequestOptions({
                             headers: new Headers({
                                 'Authorization': 'Bearer ' + token,
-                                'projectId': this.activeUserProject.projectId
+                                'userProjectId': this.activeUserProject.id
                             })
                         });
                     } else {
@@ -83,7 +83,7 @@ export class KeycloakHttp extends Http {
             return tokenObservable.map(token => {
                     url.headers.set('Authorization', 'Bearer ' + token);
                     if (this.activeUserProject != null) {
-                        url.headers.append('projectId', this.activeUserProject.projectId);
+                        url.headers.append('userProjectId', this.activeUserProject.id);
                     }
                     return url;
                 })
