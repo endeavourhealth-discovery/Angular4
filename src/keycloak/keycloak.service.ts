@@ -36,7 +36,7 @@ export class KeycloakService {
 
         KeycloakService.auth.loggedIn = false;
 
-        keycloakAuth.init({onLoad: 'login-required'})
+        keycloakAuth.init({onLoad: 'login-required', checkLoginIframe: false})
             .success(() => {
                 KeycloakService.auth.loggedIn = true;
                 KeycloakService.auth.authz = keycloakAuth;
